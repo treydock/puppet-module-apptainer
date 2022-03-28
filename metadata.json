@@ -1,0 +1,68 @@
+{
+  "name": "treydock-apptainer",
+  "version": "0.1.0",
+  "author": "treydock",
+  "summary": "apptainer Puppet module",
+  "license": "Apache-2.0",
+  "source": "https://github.com/treydock/puppet-module-apptainer",
+  "project_page": "https://github.com/treydock/puppet-module-apptainer",
+  "issues_url": "https://github.com/treydock/puppet-module-apptainer/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.13.1 <9.0.0"
+    },
+    {
+      "name": "treydock/golang",
+      "version_requirement": ">= 1.0.0 <3.0.0"
+    },
+    {
+      "name": "puppet/archive",
+      "version_requirement": ">= 1.0.0 <7.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "9",
+        "10"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "18.04",
+        "20.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 6.0.0 < 8.0.0"
+    }
+  ],
+  "pdk-version": "2.1.0",
+  "template-url": "https://github.com/treydock/pdk-templates.git#master",
+  "template-ref": "heads/master-0-g3b13f94"
+}

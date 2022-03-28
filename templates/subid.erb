@@ -1,0 +1,6 @@
+<%- start = scope['apptainer::namespace_begin_id'] -%>
+<%- range = scope['apptainer::namespace_id_range'] -%>
+<%- scope['apptainer::namespace_users'].each do |user| -%>
+<%= user %>:<%= start %>:<%= range %>
+<%- start = start + range + 1 -%>
+<%- end -%>

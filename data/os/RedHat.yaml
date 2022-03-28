@@ -1,0 +1,9 @@
+---
+apptainer::install_method: package
+apptainer::package_name: apptainer
+apptainer::source_dependencies:
+  - gcc
+  - make
+  - squashfs-tools
+  - libseccomp-devel
+  - cryptsetup
