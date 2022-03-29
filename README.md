@@ -57,6 +57,18 @@ apptainer::plugins:
     source_dir: examples/plugins/log-plugin
 ```
 
+If replacing Singularity with Apptainer, it's possible to have this module cleanup Singularity to avoid conflicts:
+
+```yaml
+apptainer::remove_singularity: true
+```
+
+Enabling Singularity removal will result in the following actions:
+
+* Remove /etc/singularity
+* Remove /opt/singularity
+* Remove /opt/singularity-3*
+
 ## Reference
 
 [http://treydock.github.io/puppet-module-apptainer/](http://treydock.github.io/puppet-module-apptainer/)

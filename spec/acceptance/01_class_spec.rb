@@ -1,6 +1,20 @@
 require 'spec_helper_acceptance'
 
 describe 'apptainer class:' do
+  context 'add singularity' do
+    it 'runs successfully' do
+      pp = <<-EOS
+      class { 'singularity':
+        # Avoid /etc/localtime which may not exist in minimal Docker environments
+        bind_paths => ['/etc/hosts'],
+      }
+      EOS
+
+      apply_manifest(pp, catch_failures: true)
+      apply_manifest(pp, catch_changes: true)
+    end
+  end
+
   context 'default parameters', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.0.0' }
 
@@ -8,6 +22,7 @@ describe 'apptainer class:' do
       pp = <<-EOS
       class { 'apptainer':
         version    => '#{version}',
+        remove_singularity => true,
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths => ['/etc/hosts'],
       }
@@ -108,6 +123,7 @@ describe 'apptainer class:' do
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
+        remove_singularity => true,
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths      => ['/etc/hosts'],
       }

@@ -7,6 +7,8 @@
 #   Sets how Apptainer will be installed
 # @param version
 #   Version of Apptainer to install
+# @param remove_singularity
+#   Set whether to remove Singularity before installing Apptainer
 # @param package_name
 #   Apptainer package name
 #   Only used when install_method=package
@@ -157,6 +159,7 @@
 class apptainer (
   Enum['package','source'] $install_method = 'package',
   String $version = '1.0.1',
+  Boolean $remove_singularity = false,
   # Package install
   String $package_name = 'apptainer',
   # Source install
@@ -240,6 +243,11 @@ class apptainer (
 
   Class["apptainer::install::${install_method}"]
   ->Class['apptainer::config']
+
+  if $remove_singularity {
+    contain apptainer::singularity
+    Class['apptainer::singularity'] -> Class["apptainer::install::${install_method}"]
+  }
 
   $plugins.each |$name, $plugin| {
     apptainer::plugin { $name: * => $plugin }
