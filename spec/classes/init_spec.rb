@@ -14,12 +14,7 @@ describe 'apptainer' do
       context 'apptainer::install::package', if: facts[:os]['family'] == 'RedHat' do
         it { is_expected.to contain_class('apptainer::install::package').that_comes_before('Class[apptainer::config]') }
         it { is_expected.not_to contain_class('apptainer::install::source') }
-        it do
-          is_expected.to contain_package('apptainer').with(
-            ensure: 'latest',
-            name: 'apptainer',
-          )
-        end
+        it { is_expected.to contain_exec('install-apptainer') }
       end
 
       context 'apptainer::install::source', if: facts[:os]['family'] == 'Debian' do

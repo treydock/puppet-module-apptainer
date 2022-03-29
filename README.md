@@ -27,9 +27,17 @@ Install and configure apptainer.
 include apptainer
 ```
 
+For both package and source installs, it's best to define the desired version.
+This Puppet module supports both upgrades and downgrades of Apptainer.
+
+```yaml
+apptainer::version: '1.0.1'
+```
+
 The following Hiera example of building from source (default for Debian based systems) with several additional options passed.
 
 ```yaml
+apptainer::version: '1.0.1'
 apptainer::install_method: source
 apptainer::build_flags:
   without-suid: true
