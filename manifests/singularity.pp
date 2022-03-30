@@ -9,6 +9,9 @@ class apptainer::singularity {
     recurse => true,
     force   => true,
   }
+  -> file { '/usr/local/sbin/singularity-mconfig.sh':
+    ensure => 'absent',
+  }
   -> file { '/opt/singularity':
     ensure  => 'absent',
     purge   => true,

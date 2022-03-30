@@ -66,6 +66,7 @@ apptainer::remove_singularity: true
 Enabling Singularity removal will result in the following actions:
 
 * Remove /etc/singularity
+* Remove /usr/local/sbin/singularity-mconfig.sh
 * Remove /opt/singularity
 * Remove /opt/singularity-3*
 
