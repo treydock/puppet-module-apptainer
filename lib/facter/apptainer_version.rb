@@ -1,4 +1,4 @@
-# nhc_version.rb
+# apptainer_version.rb
 
 Facter.add(:apptainer_version) do
   confine kernel: 'Linux'
