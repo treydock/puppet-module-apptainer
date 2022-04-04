@@ -243,7 +243,7 @@ class apptainer (
 
   if $remove_singularity {
     contain apptainer::singularity
-    Class['apptainer::config'] -> Class['apptainer::singularity']
+    Class['apptainer::singularity'] -> Class["apptainer::install::${install_method}"]
   }
 
   $plugins.each |$name, $plugin| {
