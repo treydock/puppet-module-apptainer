@@ -408,9 +408,3 @@ download part size = <%= scope['apptainer::download_part_size'] %>
 # This option specifies the transfer buffer size when concurrent downloads
 # are enabled.
 download buffer size = <%= scope['apptainer::download_buffer_size'] %>
-
-# SYSTEMD CGROUPS: [BOOL]
-# DEFAULT: yes
-# Whether to use systemd to manage container cgroups. Required for rootless cgroups
-# functionality. 'no' will manage cgroups directly via cgroupfs.
-systemd cgroups = <%= scope['apptainer::systemd_cgroups'] %>

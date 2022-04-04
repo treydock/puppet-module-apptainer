@@ -144,8 +144,6 @@
 #   See apptainer.conf: `download part size`
 # @param download_buffer_size
 #   See apptainer.conf: `download buffer size`
-# @param systemd_cgroups
-#   See apptainer.conf: `systemd cgroups`
 # @param namespace_users
 #   List of uses to add to /etc/subuid and /etc/subgid to support user namespaces
 # @param namespace_begin_id
@@ -231,7 +229,6 @@ class apptainer (
   Integer[0,default] $download_concurrency = 3,
   Integer[0,default] $download_part_size = 5242880,
   Integer[0,default] $download_buffer_size = 32768,
-  Enum['yes','no'] $systemd_cgroups = 'yes',
   Array $namespace_users = [],
   Integer $namespace_begin_id = 65537,
   Integer $namespace_id_range = 65536,

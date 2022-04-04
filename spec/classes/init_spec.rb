@@ -94,7 +94,6 @@ describe 'apptainer' do
                                   'download concurrency = 3',
                                   'download part size = 5242880',
                                   'download buffer size = 32768',
-                                  'systemd cgroups = yes',
                                 ])
         end
 
