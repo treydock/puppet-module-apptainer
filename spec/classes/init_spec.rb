@@ -89,6 +89,8 @@ describe 'apptainer' do
                                   'always use rocm = no',
                                   'root default capabilities = full',
                                   'memory fs type = tmpfs',
+                                  'cryptsetup path = /usr/sbin/cryptsetup',
+                                  'ldconfig path = /usr/sbin/ldconfig',
                                   'mksquashfs procs = 0',
                                   'shared loop devices = no',
                                   'download concurrency = 3',

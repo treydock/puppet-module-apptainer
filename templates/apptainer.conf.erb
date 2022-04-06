@@ -297,9 +297,7 @@ cni plugin path = <%= scope['apptainer::cni_plugin_path'] %>
 # Must be set to build or run encrypted containers.
 # Executable must be owned by root for security reasons.
 # cryptsetup path =
-<%- if scope['apptainer::cryptsetup_path'] -%>
 cryptsetup path = <%= scope['apptainer::cryptsetup_path'] %>
-<%- end -%>
 
 # GO PATH: [STRING]
 # DEFAULT: Undefined
@@ -317,9 +315,7 @@ go path = <%= scope['apptainer::go_path'] %>
 # Must be set to use --nv / --nvccli.
 # When run as root, executable must be owned by root for security reasons.
 # ldconfig path =
-<%- if scope['apptainer::ldconfig_path'] -%>
 ldconfig path = <%= scope['apptainer::ldconfig_path'] %>
-<%- end -%>
 
 # MKSQUASHFS PATH: [STRING]
 # DEFAULT: Undefined
