@@ -1,0 +1,2 @@
+---
+apptainer::config_path: /etc/apptainer/apptainer.conf

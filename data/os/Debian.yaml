@@ -1,0 +1,10 @@
+---
+apptainer::install_method: source
+apptainer::source_dependencies:
+  - build-essential
+  - uuid-dev
+  - libgpgme-dev
+  - squashfs-tools
+  - libseccomp-dev
+  - pkg-config
+  - cryptsetup-bin
