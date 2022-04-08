@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Defined Type: apptainer::plugin
+  
+    &mdash; Documentation by YARD 0.9.27
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "puppet_defined_types::apptainer::plugin";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../puppet_defined_type_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (a)</a> &raquo;
+    <span class='title'><span class='object_link'>Defined Types</span></span>
+     &raquo; 
+    <span class="title">apptainer::plugin</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="../puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Defined Type: apptainer::plugin</h1>
+<div class="box_info">
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      manifests/plugin.pp
+    </dd>
+  </dl>
+</div>
+
+  <h2>Summary</h2>
+  Manage Apptainer plugin
+
+<h2>Overview</h2>
+<div class="docstring">
+  <div class="discussion">
+    
+  </div>
+</div>
+
+
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>install log plugin</p>
+</div></p>
+      
+      <pre class="example code"><code>
+apptainer::plugin { &#39;github.com/apptainer/apptainer/log-plugin&#39;:
+  source_dir =&gt; &#39;examples/plugins/log-plugin&#39;,
+}</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>source_dir</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The plugin source directory This path must be relative to Apptainer source
+directory <code>$apptainer::install::source::source_dir</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ensure</span>
+      
+      
+        <span class='type'>(<tt>Enum['present', 'absent']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;present&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether to install (present) or uninstall (absent) the plugin</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sif_name</span>
+      
+      
+        <span class='type'>(<tt>Optional[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the SIF image to use for install after the plugin is compiled.
+The default is to use part after last <code>/</code> in the plugin name so
+plugin <code>examples/plugins/log-plugin</code> will have SIF name of
+<code>log-plugin.sif</code>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+
+</div><div class="method_details_list">
+  <table class="source_code">
+    <tr>
+      <td>
+        <pre class="lines">
+
+
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre>
+      </td>
+      <td>
+        <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 19</span>
+
+define apptainer::plugin (
+  Enum[&#39;present&#39;, &#39;absent&#39;] $ensure = &#39;present&#39;,
+  Optional[String] $source_dir = undef,
+  Optional[String] $sif_name = undef,
+) {
+  include apptainer
+
+  if $apptainer::install_method != &#39;source&#39; {
+    fail(&quot;Define apptainer::plugin ${name} can only be done for source installation&quot;)
+  }
+
+  if $ensure == &#39;present&#39; and $source_dir =~ Undef {
+    fail(&quot;Define apptainer::plugin ${name} must define source_dir&quot;)
+  }
+
+  $exec_path = &quot;${apptainer::prefix}/bin:${apptainer::source_exec_path}&quot;
+
+  if $ensure == &#39;present&#39; {
+    $basename = split($name, &#39;/&#39;)[-1]
+    $_sif_name = pick($sif_name, &quot;${basename}.sif&quot;)
+    $sif_path = &quot;${apptainer::install::source::source_dir}/${source_dir}/${_sif_name}&quot;
+
+    if $apptainer::manage_go and $apptainer::rebuild_on_go {
+      Class[&#39;golang&#39;] ~&gt; Exec[&quot;apptainer-plugin-recompile-${name}&quot;]
+    }
+
+    exec { &quot;apptainer-plugin-compile-${name}&quot;:
+      path        =&gt; $exec_path,
+      environment =&gt; $apptainer::install::source::build_env,
+      command     =&gt; &quot;apptainer plugin compile ${source_dir}&quot;,
+      cwd         =&gt; $apptainer::install::source::source_dir,
+      creates     =&gt; $sif_path,
+      require     =&gt; Class[&#39;apptainer::install::source&#39;],
+    }
+
+    exec { &quot;apptainer-plugin-recompile-${name}&quot;:
+      path        =&gt; $exec_path,
+      environment =&gt; $apptainer::install::source::build_env,
+      command     =&gt; &quot;apptainer plugin compile ${source_dir}&quot;,
+      cwd         =&gt; $apptainer::install::source::source_dir,
+      onlyif      =&gt; &quot;test -f ${sif_path}&quot;,
+      refreshonly =&gt; true,
+      require     =&gt; Class[&#39;apptainer::install::source&#39;],
+      notify      =&gt; Exec[&quot;apptainer-plugin-reinstall-${name}&quot;],
+    }
+
+    exec { &quot;apptainer-plugin-install-${name}&quot;:
+      path    =&gt; $exec_path,
+      command =&gt; &quot;apptainer plugin install ${sif_path}&quot;,
+      unless  =&gt; &quot;apptainer plugin list | grep &#39;${name}&#39;&quot;,
+      require =&gt; Exec[&quot;apptainer-plugin-compile-${name}&quot;],
+    }
+
+    exec { &quot;apptainer-plugin-reinstall-${name}&quot;:
+      path        =&gt; $exec_path,
+      command     =&gt; &quot;apptainer plugin install ${sif_path}&quot;,
+      onlyif      =&gt; &quot;apptainer plugin list | grep &#39;${name}&#39;&quot;,
+      refreshonly =&gt; true,
+      subscribe   =&gt; Exec[&quot;apptainer-plugin-compile-${name}&quot;],
+    }
+
+    exec { &quot;apptainer-plugin-enable-${name}&quot;:
+      path    =&gt; $exec_path,
+      command =&gt; &quot;apptainer plugin enable ${name}&quot;,
+      unless  =&gt; &quot;apptainer plugin list | grep &#39;${name}&#39; | grep yes&quot;,
+      require =&gt; [
+        Exec[&quot;apptainer-plugin-install-${name}&quot;],
+        Exec[&quot;apptainer-plugin-reinstall-${name}&quot;],
+      ],
+    }
+  } else {
+    exec { &quot;apptainer-plugin-uninstall-${name}&quot;:
+      path    =&gt; $exec_path,
+      command =&gt; &quot;apptainer plugin uninstall ${name}&quot;,
+      onlyif  =&gt; &quot;apptainer plugin list | grep &#39;${name}&#39;&quot;,
+    }
+  }
+
+}</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+
+      <div id="footer">
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+    </div>
+  </body>
+</html>

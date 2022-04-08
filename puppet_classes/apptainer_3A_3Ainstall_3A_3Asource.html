@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Puppet Class: apptainer::install::source
+  
+    &mdash; Documentation by YARD 0.9.27
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "puppet_classes::apptainer::install::source";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../puppet_class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (a)</a> &raquo;
+    <span class='title'><span class='object_link'>Puppet Classes</span></span>
+     &raquo; 
+    <span class="title">apptainer::install::source</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_class_list_link"
+        href="../puppet_class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Puppet Class: apptainer::install::source</h1>
+<div class="box_info">
+  
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      manifests/install/source.pp
+    </dd>
+  </dl>
+</div>
+
+  <h2>Summary</h2>
+  Private class
+
+<h2>Overview</h2>
+<div class="docstring">
+  <div class="discussion">
+    
+  </div>
+</div>
+
+
+<div class="tags">
+  
+
+
+</div><div class="method_details_list">
+  <table class="source_code">
+    <tr>
+      <td>
+        <pre class="lines">
+
+
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
+      </td>
+      <td>
+        <pre class="code"><span class="info file"># File 'manifests/install/source.pp', line 3</span>
+
+class apptainer::install::source {
+  assert_private()
+
+  if $apptainer::manage_go {
+    include golang
+    if $apptainer::rebuild_on_go {
+      Class[&#39;golang&#39;] ~&gt; Exec[&#39;apptainer-mconfig&#39;]
+    } else {
+      Class[&#39;golang&#39;] -&gt; Exec[&#39;apptainer-mconfig&#39;]
+    }
+  }
+  ensure_packages($apptainer::source_dependencies)
+  $apptainer::source_dependencies.each |$package| {
+    Package[$package] -&gt; Exec[&#39;apptainer-mconfig&#39;]
+  }
+
+  $source_dir = &quot;${apptainer::source_base_dir}/apptainer-${apptainer::version}&quot;
+  $base_build_flags = {
+    &#39;prefix&#39; =&gt; $apptainer::prefix,
+    &#39;localstatedir&#39; =&gt; $apptainer::localstatedir,
+    &#39;sysconfdir&#39; =&gt; $apptainer::sysconfdir,
+  }
+  $build_flags_mapped = ($base_build_flags + $apptainer::build_flags).map |$key, $value| {
+    if $value == &#39;&#39; or $value =~ Boolean {
+      &quot;--${key}&quot;
+    } else {
+      &quot;--${key}=${value}&quot;
+    }
+  }
+  $build_flags = join($build_flags_mapped, &#39; &#39;)
+  $base_build_env = {
+    &#39;HOME&#39; =&gt; &#39;/root&#39;,
+  }
+  $build_env = ($base_build_env + $apptainer::build_env).map |$key, $value| { &quot;${key}=${value}&quot; }
+
+  file { &#39;apptainer-mconfig&#39;:
+      ensure  =&gt; &#39;file&#39;,
+      path    =&gt; $apptainer::source_mconfig_path,
+      owner   =&gt; &#39;root&#39;,
+      group   =&gt; &#39;root&#39;,
+      mode    =&gt; &#39;0755&#39;,
+      content =&gt; join([
+        &#39;#!/bin/bash&#39;,
+        &#39;# File managed by Puppet, do not edit&#39;,
+        &quot;cd ${source_dir}&quot;,
+        &quot;./mconfig ${build_flags}&quot;,
+        &#39;&#39;,
+      ], &quot;\n&quot;)
+    }
+
+  file { $source_dir:
+    ensure =&gt; &#39;directory&#39;,
+    owner  =&gt; &#39;root&#39;,
+    group  =&gt; &#39;root&#39;,
+    mode   =&gt; &#39;0755&#39;,
+  }
+  -&gt; archive { &#39;apptainer-source&#39;:
+      path            =&gt; &quot;/tmp/apptainer-${apptainer::version}.tar.gz&quot;,
+      source          =&gt; &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}.tar.gz&quot;,
+      extract         =&gt; true,
+      extract_path    =&gt; $source_dir,
+      extract_command =&gt; &#39;tar xfz %s --strip-components=1&#39;,
+      creates         =&gt; &quot;${source_dir}/mconfig&quot;,
+      cleanup         =&gt; true,
+      user            =&gt; &#39;root&#39;,
+      group           =&gt; &#39;root&#39;,
+      notify          =&gt; Exec[&#39;apptainer-mconfig&#39;],
+    }
+  exec { &#39;apptainer-mconfig&#39;:
+    path        =&gt; $apptainer::source_exec_path,
+    environment =&gt; $build_env,
+    command     =&gt; $apptainer::source_mconfig_path,
+    cwd         =&gt; $source_dir,
+    refreshonly =&gt; true,
+    subscribe   =&gt; File[&#39;apptainer-mconfig&#39;],
+  }
+  ~&gt; exec { &#39;apptainer-make&#39;:
+    path        =&gt; $apptainer::source_exec_path,
+    environment =&gt; $build_env,
+    command     =&gt; &#39;make -C ./builddir&#39;,
+    cwd         =&gt; $source_dir,
+    refreshonly =&gt; true,
+  }
+  ~&gt; exec { &#39;apptainer-make-install&#39;:
+    path        =&gt; $apptainer::source_exec_path,
+    environment =&gt; $build_env,
+    command     =&gt; &#39;make -C ./builddir install&#39;,
+    cwd         =&gt; $source_dir,
+    refreshonly =&gt; true,
+  }
+}</pre>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+
+      <div id="footer">
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+    </div>
+  </body>
+</html>
