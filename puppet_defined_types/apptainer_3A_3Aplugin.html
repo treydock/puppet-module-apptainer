@@ -246,7 +246,16 @@ plugin <code>examples/plugins/log-plugin</code> will have SIF name of
 94
 95
 96
-97</pre>
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 19</span>
@@ -275,6 +284,15 @@ define apptainer::plugin (
 
     if $apptainer::manage_go and $apptainer::rebuild_on_go {
       Class[&#39;golang&#39;] ~&gt; Exec[&quot;apptainer-plugin-recompile-${name}&quot;]
+    }
+
+    if $facts[&#39;apptainer_version&#39;] and $facts[&#39;apptainer_version&#39;] != $apptainer::version {
+      exec { &quot;apptainer-plugin-uninstall-for-upgrade-${name}&quot;:
+        path    =&gt; $exec_path,
+        command =&gt; &quot;apptainer plugin uninstall ${name}&quot;,
+        onlyif  =&gt; &quot;apptainer plugin list | grep &#39;${name}&#39;&quot;,
+        before  =&gt; Class[&#39;apptainer::install::source&#39;],
+      }
     }
 
     exec { &quot;apptainer-plugin-compile-${name}&quot;:
