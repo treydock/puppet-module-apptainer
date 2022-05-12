@@ -11,7 +11,7 @@ describe 'apptainer::plugin' do
       EOS
       pp = <<-EOS
       class { 'apptainer':
-        version        => '1.0.0',
+        version        => '1.0.1',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],
@@ -36,8 +36,7 @@ describe 'apptainer::plugin' do
     end
   end
 
-  # TODO: Remove 'if' once something above 3.8.0 is available
-  context 'reinstalls log plugin during upgrade', if: false do
+  context 'reinstalls log plugin during upgrade' do
     it 'runs successfully' do
       setup_pp = <<-EOS
       class { 'rsyslog::client':
@@ -47,7 +46,7 @@ describe 'apptainer::plugin' do
       EOS
       pp = <<-EOS
       class { 'apptainer':
-        version        => '1.0.1',
+        version        => '1.0.2',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],

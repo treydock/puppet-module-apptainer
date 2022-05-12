@@ -42,6 +42,15 @@ define apptainer::plugin (
       Class['golang'] ~> Exec["apptainer-plugin-recompile-${name}"]
     }
 
+    if $facts['apptainer_version'] and $facts['apptainer_version'] != $apptainer::version {
+      exec { "apptainer-plugin-uninstall-for-upgrade-${name}":
+        path    => $exec_path,
+        command => "apptainer plugin uninstall ${name}",
+        onlyif  => "apptainer plugin list | grep '${name}'",
+        before  => Class['apptainer::install::source'],
+      }
+    }
+
     exec { "apptainer-plugin-compile-${name}":
       path        => $exec_path,
       environment => $apptainer::install::source::build_env,
