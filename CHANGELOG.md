@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v0.1.1](https://github.com/treydock/puppet-module-apptainer/tree/v0.1.1) (2022-05-12)
+
+[Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v0.1.0...v0.1.1)
+
+### Fixed
+
+- Uninstall plugins before apptainer upgrades to avoid errors during upgrade [\#2](https://github.com/treydock/puppet-module-apptainer/pull/2) ([treydock](https://github.com/treydock))
+
 ## [v0.1.0](https://github.com/treydock/puppet-module-apptainer/tree/v0.1.0) (2022-04-08)
 
 [Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/612972f71b22be73932a43e445c94c8ec598cec1...v0.1.0)
