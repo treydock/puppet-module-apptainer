@@ -30,6 +30,30 @@ describe 'apptainer' do
         end
       end
 
+      describe 'apptainer::install::os', if: facts[:os]['family'] == 'RedHat' do
+        let(:params) do
+          {
+            'install_method' => 'os',
+            'version' => '3.14'
+          }
+        end
+
+        it { is_expected.to contain_class('apptainer::install::os').that_comes_before('Class[apptainer::config]') }
+        it { is_expected.not_to contain_class('apptainer::install::source') }
+        it { is_expected.not_to contain_class('apptainer::install::package') }
+        it { is_expected.to contain_package('apptainer').with_ensure('3.14') }
+        it { is_expected.to contain_package('apptainer-suid').with_ensure('absent') }
+
+        describe 'with install_setuid true' do
+          let(:params) do
+            super().merge(install_setuid: true)
+          end
+
+          it { is_expected.to contain_package('apptainer').with_ensure('3.14') }
+          it { is_expected.to contain_package('apptainer-suid').with_ensure('3.14') }
+        end
+      end
+
       describe 'apptainer::install::source', if: facts[:os]['family'] == 'Debian' do
         it { is_expected.not_to contain_class('apptainer::install::package') }
         it { is_expected.to contain_class('apptainer::install::source').that_comes_before('Class[apptainer::config]') }
