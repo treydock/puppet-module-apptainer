@@ -17,12 +17,19 @@ class apptainer::install::source {
   }
 
   $source_dir = "${apptainer::source_base_dir}/apptainer-${apptainer::version}"
+  if $apptainer::install_setuid {
+    $setuid_flags = {
+      'with-suid' => true,
+    }
+  } else {
+    $setuid_flags = {}
+  }
   $base_build_flags = {
     'prefix' => $apptainer::prefix,
     'localstatedir' => $apptainer::localstatedir,
     'sysconfdir' => $apptainer::sysconfdir,
   }
-  $build_flags_mapped = ($base_build_flags + $apptainer::build_flags).map |$key, $value| {
+  $build_flags_mapped = ($base_build_flags + $setuid_flags + $apptainer::build_flags).map |$key, $value| {
     if $value == '' or $value =~ Boolean {
       "--${key}"
     } else {

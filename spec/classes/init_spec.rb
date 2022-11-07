@@ -15,6 +15,17 @@ describe 'apptainer' do
         it { is_expected.to contain_class('apptainer::install::package').that_comes_before('Class[apptainer::config]') }
         it { is_expected.not_to contain_class('apptainer::install::source') }
         it { is_expected.to contain_exec('install-apptainer') }
+        it { is_expected.not_to contain_exec('install-apptainer-suid') }
+
+        context 'with install_setuid => true' do
+          let(:params) do
+            {
+              install_setuid: true,
+            }
+          end
+
+          it { is_expected.to contain_exec('install-apptainer-suid') }
+        end
       end
 
       context 'apptainer::install::source', if: facts[:os]['family'] == 'Debian' do
@@ -25,6 +36,20 @@ describe 'apptainer' do
           verify_contents(catalogue, 'apptainer-mconfig', [
                             './mconfig --prefix=/usr --localstatedir=/var --sysconfdir=/etc',
                           ])
+        end
+
+        context 'with install_setuid => true' do
+          let(:params) do
+            {
+              install_setuid: true,
+            }
+          end
+
+          it do
+            verify_contents(catalogue, 'apptainer-mconfig', [
+                              './mconfig --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-suid',
+                            ])
+          end
         end
 
         context 'with build flags provided' do

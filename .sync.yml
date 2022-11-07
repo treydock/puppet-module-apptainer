@@ -2,9 +2,9 @@
 .github/workflows/ci.yaml:
   acceptance_matrix:
     set:
-      - centos-7
-      - rocky-8
-      - debian-9
+      - el7
+      - el8
+      - ---el9
       - debian-10
       - ubuntu-1804
       - ubuntu-2004

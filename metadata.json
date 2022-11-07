@@ -44,7 +44,6 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "9",
         "10"
       ]
     },
@@ -64,5 +63,5 @@
   ],
   "pdk-version": "2.1.0",
   "template-url": "https://github.com/treydock/pdk-templates.git#master",
-  "template-ref": "heads/master-0-g3b13f94"
+  "template-ref": "heads/master-0-gad89885"
 }

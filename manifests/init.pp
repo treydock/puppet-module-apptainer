@@ -5,6 +5,8 @@
 #
 # @param install_method
 #   Sets how Apptainer will be installed
+# @param install_setuid
+#   Whether to install the setuid portion of apptainer
 # @param version
 #   Version of Apptainer to install
 # @param remove_singularity
@@ -156,7 +158,8 @@
 #
 class apptainer (
   Enum['package','source'] $install_method = 'package',
-  String $version = '1.0.1',
+  Boolean $install_setuid = false,
+  String $version = '1.1.3',
   Boolean $remove_singularity = false,
   # Package install
   String $package_name = 'apptainer',
