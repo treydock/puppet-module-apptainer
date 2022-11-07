@@ -3,20 +3,6 @@
 require 'spec_helper_acceptance'
 
 describe 'apptainer class:' do
-  context 'when adding singularity' do
-    it 'runs successfully' do
-      pp = <<-PUPPET_PP
-      class { 'singularity':
-        # Avoid /etc/localtime which may not exist in minimal Docker environments
-        bind_paths => ['/etc/hosts'],
-      }
-      PUPPET_PP
-
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
-    end
-  end
-
   context 'with default parameters', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.0.0' }
 
