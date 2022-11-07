@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'apptainer::plugin' do
-  context 'installs log plugin' do
+  context 'when installs log plugin' do
     it 'runs successfully' do
-      setup_pp = <<-EOS
+      setup_pp = <<-SETUP_PP
       class { 'rsyslog::client':
         log_local  => true,
         log_remote => false,
       }
-      EOS
-      pp = <<-EOS
+      SETUP_PP
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version        => '1.0.1',
         install_method => 'source',
@@ -19,7 +21,7 @@ describe 'apptainer::plugin' do
       apptainer::plugin { 'github.com/apptainer/apptainer/log-plugin':
         source_dir => 'examples/plugins/log-plugin',
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(setup_pp, catch_failures: true)
       apply_manifest(setup_pp, catch_failures: true)
@@ -36,15 +38,15 @@ describe 'apptainer::plugin' do
     end
   end
 
-  context 'reinstalls log plugin during upgrade' do
+  context 'when reinstalls log plugin during upgrade' do
     it 'runs successfully' do
-      setup_pp = <<-EOS
+      setup_pp = <<-SETUP_PP
       class { 'rsyslog::client':
         log_local  => true,
         log_remote => false,
       }
-      EOS
-      pp = <<-EOS
+      SETUP_PP
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version        => '1.0.2',
         install_method => 'source',
@@ -54,7 +56,7 @@ describe 'apptainer::plugin' do
       apptainer::plugin { 'github.com/apptainer/apptainer/log-plugin':
         source_dir => 'examples/plugins/log-plugin',
       }
-      EOS
+      PUPPET_PP
 
       on hosts, 'find /var/log -type f -exec rm -f {} \;'
       on hosts, 'systemctl restart rsyslog'

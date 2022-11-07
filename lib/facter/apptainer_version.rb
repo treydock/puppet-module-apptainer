@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # apptainer_version.rb
 
 Facter.add(:apptainer_version) do
@@ -7,7 +9,7 @@ Facter.add(:apptainer_version) do
     version = nil
     if Facter::Util::Resolution.which('apptainer')
       version = Facter::Util::Resolution.exec('apptainer version')
-      version.strip! unless version.nil?
+      version&.strip!
     end
     version
   end
