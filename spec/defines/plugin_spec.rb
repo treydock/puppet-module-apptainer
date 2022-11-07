@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'apptainer::plugin' do
@@ -71,7 +73,7 @@ describe 'apptainer::plugin' do
           unless: "apptainer plugin list | grep 'github.com/apptainer/apptainer/log-plugin' | grep yes",
           require: [
             'Exec[apptainer-plugin-install-github.com/apptainer/apptainer/log-plugin]',
-            'Exec[apptainer-plugin-reinstall-github.com/apptainer/apptainer/log-plugin]',
+            'Exec[apptainer-plugin-reinstall-github.com/apptainer/apptainer/log-plugin]'
           ],
         )
       end

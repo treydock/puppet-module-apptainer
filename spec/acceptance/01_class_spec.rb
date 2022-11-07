@@ -1,32 +1,34 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'apptainer class:' do
-  context 'add singularity' do
+  context 'when adding singularity' do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'singularity':
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
   end
 
-  context 'default parameters', if: fact('os.family') == 'RedHat' do
+  context 'with default parameters', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.0.0' }
 
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version    => '#{version}',
         remove_singularity => true,
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
@@ -49,17 +51,17 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'upgrades package install', if: fact('os.family') == 'RedHat' do
+  context 'when upgrades package install', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.0.1' }
 
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version    => '#{version}',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
@@ -82,17 +84,17 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'downgrade package install', if: fact('os.family') == 'RedHat' do
+  context 'when downgrade package install', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.0.0' }
 
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version    => '#{version}',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
@@ -115,11 +117,11 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'source install' do
+  context 'when source install' do
     let(:version) { '1.0.0' }
 
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
@@ -127,7 +129,7 @@ describe 'apptainer class:' do
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths      => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       if fact('os.family') == 'RedHat'
         on hosts, 'puppet resource package apptainer ensure=absent'
@@ -153,18 +155,18 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'upgrade' do
+  context 'when upgrade' do
     let(:version) { '1.0.1' }
 
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths      => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
@@ -187,18 +189,18 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'downgrade' do
+  context 'when downgrade' do
     let(:version) { '1.0.0' }
 
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths      => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
