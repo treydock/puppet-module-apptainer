@@ -2,8 +2,12 @@
 apptainer::install_method: package
 apptainer::package_name: apptainer
 apptainer::source_dependencies:
+  - fakeroot
   - gcc
   - make
+  - e2fsprogs
+  - fuse-overlayfs
   - squashfs-tools
+  - squashfuse
   - libseccomp-devel
   - cryptsetup

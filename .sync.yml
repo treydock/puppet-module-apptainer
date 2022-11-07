@@ -6,9 +6,10 @@
       - el8
       - ---el9
       - debian-10
-      - ubuntu-1804
       - ubuntu-2004
 .gitlab-ci.yml:
   delete: true
 appveyor.yml:
+  delete: true
+spec/acceptance/nodesets/ubuntu-1804.yml:
   delete: true

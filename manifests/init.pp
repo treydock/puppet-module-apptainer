@@ -9,6 +9,8 @@
 #   Whether to install the setuid portion of apptainer
 # @param version
 #   Version of Apptainer to install
+# @param manage_repo
+#   Enable repositories for apptainer packages, e.g. EPEL on RedHat
 # @param remove_singularity
 #   Set whether to remove Singularity before installing Apptainer
 # @param package_name
@@ -160,6 +162,7 @@ class apptainer (
   Enum['package','source'] $install_method = 'package',
   Boolean $install_setuid = false,
   String $version = '1.1.3',
+  Boolean $manage_repo = true,
   Boolean $remove_singularity = false,
   # Package install
   String $package_name = 'apptainer',
@@ -237,6 +240,11 @@ class apptainer (
   Integer $namespace_id_range = 65536,
   String $subid_template = 'apptainer/subid.erb',
 ) {
+
+  if $facts['os']['family'] == 'RedHat' and $manage_repo {
+    include epel
+    Class['epel'] -> Class["apptainer::install::${install_method}"]
+  }
 
   contain "apptainer::install::${install_method}"
   contain apptainer::config
