@@ -5,6 +5,10 @@ fixtures:
   forge_modules:
     stdlib:
       repo: "puppetlabs/stdlib"
+    epel:
+      repo: "puppet/epel"
+    yumrepo_core:
+      repo: "puppetlabs/yumrepo_core"
     golang:
       repo: "treydock/golang"
     archive:

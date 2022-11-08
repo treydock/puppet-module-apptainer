@@ -52,7 +52,6 @@ jobs:
           - "el7"
           - "el8"
           - "debian-10"
-          - "ubuntu-1804"
           - "ubuntu-2004"
         puppet:
           - "puppet6"

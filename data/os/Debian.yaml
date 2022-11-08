@@ -4,7 +4,12 @@ apptainer::source_dependencies:
   - build-essential
   - uuid-dev
   - libgpgme-dev
+  - fakeroot
+  - fuse-overlayfs
+  - fuse2fs
   - squashfs-tools
+  - squashfuse
   - libseccomp-dev
   - pkg-config
   - cryptsetup-bin
+  - uidmap
