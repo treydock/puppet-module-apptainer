@@ -13,12 +13,12 @@ describe 'apptainer::plugin' do
       SETUP_PP
       pp = <<-PUPPET_PP
       class { 'apptainer':
-        version        => '1.0.1',
+        version        => '1.1.0',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],
       }
-      apptainer::plugin { 'github.com/apptainer/apptainer/log-plugin':
+      apptainer::plugin { 'example.com/log-plugin':
         source_dir => 'examples/plugins/log-plugin',
       }
       PUPPET_PP
@@ -48,12 +48,12 @@ describe 'apptainer::plugin' do
       SETUP_PP
       pp = <<-PUPPET_PP
       class { 'apptainer':
-        version        => '1.0.2',
+        version        => '1.1.3',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],
       }
-      apptainer::plugin { 'github.com/apptainer/apptainer/log-plugin':
+      apptainer::plugin { 'example.com/log-plugin':
         source_dir => 'examples/plugins/log-plugin',
       }
       PUPPET_PP
