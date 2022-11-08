@@ -148,9 +148,10 @@ mount slave = <%= scope['apptainer::mount_slave'] %>
 
 # SESSIONDIR MAXSIZE: [STRING]
 # DEFAULT: 16
-# This specifies how large the default sessiondir should be (in MB) and it will
-# only affect users who use the "--contain" options and don't also specify a
-# location to do default read/writes to (e.g. "--workdir" or "--home").
+# This specifies how large the default sessiondir should be (in MB). It will
+# affect users who use the "--contain" options and don't also specify a
+# location to do default read/writes to (e.g. "--workdir" or "--home") and
+# it will also affect users of "--writable-tmpfs".
 sessiondir max size = <%= scope['apptainer::sessiondir_max_size'] %>
 
 # LIMIT CONTAINER OWNERS: [STRING]
@@ -276,7 +277,7 @@ memory fs type = <%= scope['apptainer::memory_fs_type'] %>
 
 # CNI CONFIGURATION PATH: [STRING]
 # DEFAULT: Undefined
-# Defines path from where CNI configuration files are stored
+# Defines path where CNI configuration files are stored
 #cni configuration path =
 <%- if scope['apptainer::cni_configuration_path'] -%>
 cni configuration path = <%= scope['apptainer::cni_configuration_path'] %>
@@ -284,48 +285,25 @@ cni configuration path = <%= scope['apptainer::cni_configuration_path'] %>
 
 # CNI PLUGIN PATH: [STRING]
 # DEFAULT: Undefined
-# Defines path from where CNI executable plugins are stored
+# Defines path where CNI executable plugins are stored
 #cni plugin path =
 <%- if scope['apptainer::cni_plugin_path'] -%>
 cni plugin path = <%= scope['apptainer::cni_plugin_path'] %>
 <%- end -%>
 
 
-# CRYPTSETUP PATH: [STRING]
-# DEFAULT: Undefined
-# Path to the cryptsetup executable, used to work with encrypted containers.
-# Must be set to build or run encrypted containers.
-# Executable must be owned by root for security reasons.
-# cryptsetup path =
-cryptsetup path = <%= scope['apptainer::cryptsetup_path'] %>
-
-# GO PATH: [STRING]
-# DEFAULT: Undefined
-# Path to the go executable, used to compile plugins.
-# If not set, Apptainer will search $PATH, /usr/local/sbin, /usr/local/bin,
-# /usr/sbin, /usr/bin, /sbin, /bin.
-# go path =
-<%- if scope['apptainer::go_path'] -%>
-go path = <%= scope['apptainer::go_path'] %>
-<%- end -%>
-
-# LDCONFIG PATH: [STRING]
-# DEFAULT: Undefined
-# Path to the ldconfig executable, used to find GPU libraries.
-# Must be set to use --nv / --nvccli.
-# When run as root, executable must be owned by root for security reasons.
-# ldconfig path =
-ldconfig path = <%= scope['apptainer::ldconfig_path'] %>
-
-# MKSQUASHFS PATH: [STRING]
-# DEFAULT: Undefined
-# Path to the mksquashfs executable, used to create SIF and SquashFS containers.
-# If not set, Apptainer will search $PATH, /usr/local/sbin, /usr/local/bin,
-# /usr/sbin, /usr/bin, /sbin, /bin.
-# mksquashfs path =
-<%- if scope['apptainer::mksquashfs_path'] -%>
-mksquashfs path = <%= scope['apptainer::mksquashfs_path'] %>
-<%- end -%>
+# BINARY PATH: [STRING]
+# DEFAULT: $PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# Colon-separated list of directories to search for many binaries.  May include
+# "$PATH:", which will be replaced by the user's PATH when not running a binary
+# that may be run with elevated privileges from the setuid program flow.  The
+# internal bin ${prefix}/libexec/apptainer/bin is always included, either at the
+# beginning of "$PATH:" if it is present or at the very beginning if "$PATH:" is
+# not present.
+# binary path = 
+<%- if scope['apptainer::binary_path'] -%>
+binary path = <%= scope['apptainer::binary_path'] %>
+<% end -%>
 
 # MKSQUASHFS PROCS: [UINT]
 # DEFAULT: 0 (All CPUs)
@@ -347,27 +325,6 @@ mksquashfs procs = <%= scope['apptainer::mksquashfs_procs'] %>
 mksquashfs mem = <%= scope['apptainer::mksquashfs_mem'] %>
 <%- end -%>
 
-
-# NVIDIA-CONTAINER-CLI PATH: [STRING]
-# DEFAULT: Undefined
-# Path to the nvidia-container-cli executable, used to find GPU libraries.
-# Must be set to use --nvccli.
-# When run as root, executable must be owned by root for security reasons
-# nvidia-container-cli path =
-<%- if scope['apptainer::nvidia_container_cli_path'] -%>
-nvidia-container-cli path = <%= scope['apptainer::nvidia_container_cli_path'] %>
-<%- end -%>
-
-
-# UNSQUASHFS PATH: [STRING]
-# DEFAULT: Undefined
-# Path to the unsquashfs executable, used to extract SIF and SquashFS containers
-# If not set, Apptainer will search $PATH, /usr/local/sbin, /usr/local/bin,
-# /usr/sbin, /usr/bin, /sbin, /bin.
-# unsquashfs path =
-<%- if scope['apptainer::unsquashfs_path'] -%>
-unsquashfs path = <%= scope['apptainer::unsquashfs_path'] %>
-<%- end -%>
 
 # SHARED LOOP DEVICES: [BOOL]
 # DEFAULT: no
@@ -404,3 +361,9 @@ download part size = <%= scope['apptainer::download_part_size'] %>
 # This option specifies the transfer buffer size when concurrent downloads
 # are enabled.
 download buffer size = <%= scope['apptainer::download_buffer_size'] %>
+
+# SYSTEMD CGROUPS: [BOOL]
+# DEFAULT: yes
+# Whether to use systemd to manage container cgroups. Required for rootless cgroups
+# functionality. 'no' will manage cgroups directly via cgroupfs.
+systemd cgroups = <%= scope['apptainer::systemd_cgroups'] %>
