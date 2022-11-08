@@ -122,22 +122,12 @@
 #   See apptainer.conf: `cni configuration path`
 # @param cni_plugin_path
 #   See apptainer.conf: `cni plugin path`
-# @param cryptsetup_path
-#   See apptainer.conf: `cryptsetup path`
-# @param go_path
-#   See apptainer.conf: `go path`
-# @param ldconfig_path
-#   See apptainer.conf: `ldconfig path`
-# @param mksquashfs_path
-#   See apptainer.conf: `mksquashfs path`
+# @param binary_path
+#   See apptainer.conf: `binary path`
 # @param mksquashfs_procs
 #   See apptainer.conf: `mksquashfs procs`
 # @param mksquashfs_mem
 #   See apptainer.conf: `mksquashfs mem`
-# @param nvidia_container_cli_path
-#   See apptainer.conf: `nvidia-container-cli path`
-# @param unsquashfs_path
-#   See apptainer.conf: `unsquashfs path`
 # @param shared_loop_devices
 #   See apptainer.conf: `shared loop devices`
 # @param image_driver
@@ -148,6 +138,8 @@
 #   See apptainer.conf: `download part size`
 # @param download_buffer_size
 #   See apptainer.conf: `download buffer size`
+# @param systemd_cgroups
+#   See apptainer.conf: `systemd cgroups`
 # @param namespace_users
 #   List of uses to add to /etc/subuid and /etc/subgid to support user namespaces
 # @param namespace_begin_id
@@ -222,19 +214,15 @@ class apptainer (
   Enum['tmpfs','ramfs'] $memory_fs_type = 'tmpfs',
   Optional[Stdlib::Absolutepath] $cni_configuration_path = undef,
   Optional[Stdlib::Absolutepath] $cni_plugin_path = undef,
-  Stdlib::Absolutepath $cryptsetup_path = '/usr/sbin/cryptsetup',
-  Optional[Stdlib::Absolutepath] $go_path = undef,
-  Stdlib::Absolutepath $ldconfig_path = '/usr/sbin/ldconfig',
-  Optional[Stdlib::Absolutepath] $mksquashfs_path = undef,
+  Optional[String[1]] $binary_path = undef,
   Integer[0,default] $mksquashfs_procs = 0,
   Optional[String[1]] $mksquashfs_mem = undef,
-  Optional[Stdlib::Absolutepath] $nvidia_container_cli_path = undef,
-  Optional[Stdlib::Absolutepath] $unsquashfs_path = undef,
   Enum['yes','no'] $shared_loop_devices = 'no',
   Optional[String] $image_driver = undef,
   Integer[0,default] $download_concurrency = 3,
   Integer[0,default] $download_part_size = 5242880,
   Integer[0,default] $download_buffer_size = 32768,
+  Enum['yes','no'] $systemd_cgroups = 'yes',
   Array $namespace_users = [],
   Integer $namespace_begin_id = 65537,
   Integer $namespace_id_range = 65536,
