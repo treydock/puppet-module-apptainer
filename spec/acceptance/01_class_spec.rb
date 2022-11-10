@@ -26,7 +26,7 @@ describe 'apptainer class:' do
       it { is_expected.to be_grouped_into 'root' }
     end
 
-    describe package(['apptainer', 'apptainer-suid']) do
+    describe package('apptainer') do
       it { is_expected.to be_installed }
     end
 
