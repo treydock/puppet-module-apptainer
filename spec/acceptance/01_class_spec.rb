@@ -54,7 +54,6 @@ describe 'apptainer class:' do
     end
   end
 
- 
   context 'with default parameters', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.1.0' }
 
