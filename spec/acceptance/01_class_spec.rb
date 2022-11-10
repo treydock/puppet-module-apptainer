@@ -3,9 +3,9 @@
 require 'spec_helper_acceptance'
 
 describe 'apptainer class:' do
-  context 'install os package', if: fact('os.family') == 'RedHat' do
+  context 'with install os package', if: fact('os.family') == 'RedHat' do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
       class { 'apptainer':
         version        => 'installed',
         install_method => 'os',
@@ -13,7 +13,7 @@ describe 'apptainer class:' do
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],
       }
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
@@ -26,11 +26,7 @@ describe 'apptainer class:' do
       it { is_expected.to be_grouped_into 'root' }
     end
 
-    describe package('apptainer') do
-      it { is_expected.to be_installed }
-    end
-
-    describe package('apptainer-suid') do
+    describe package(['apptainer', 'apptainer-suid']) do
       it { is_expected.to be_installed }
     end
 
@@ -40,36 +36,32 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'remove os package', if: fact('os.family') == 'RedHat' do
+  context 'with remove os package', if: fact('os.family') == 'RedHat' do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-PUPPET_PP
         package{['apptainer-suid', 'apptainer']:
           ensure => 'absent',
         }
         Package['apptainer-suid'] -> Package['apptainer']
-      EOS
+      PUPPET_PP
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
     end
 
-    describe package('apptainer') do
-      it { is_expected.not_to be_installed }
-    end
-
-    describe package('apptainer-suid') do
+    describe package(['apptainer', 'apptainer-suid']) do
       it { is_expected.not_to be_installed }
     end
   end
 
-  context 'add singularity' do
+  context 'with singularity' do
     it 'runs successfully' do
-      pp = <<-EOS
+      pp = <<-EO_SINGULARITY
       class { 'singularity':
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths => ['/etc/hosts'],
       }
-      EOS
+      EO_SINGULARITY
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
