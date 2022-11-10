@@ -54,20 +54,7 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'with singularity' do
-    it 'runs successfully' do
-      pp = <<-EO_SINGULARITY
-      class { 'singularity':
-        # Avoid /etc/localtime which may not exist in minimal Docker environments
-        bind_paths => ['/etc/hosts'],
-      }
-      EO_SINGULARITY
-
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
-    end
-  end
-
+ 
   context 'with default parameters', if: fact('os.family') == 'RedHat' do
     let(:version) { '1.1.0' }
 
