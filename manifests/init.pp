@@ -4,7 +4,10 @@
 #   include ::apptainer
 #
 # @param install_method
-#   Sets how Apptainer will be installed
+#   Sets how Apptainer will be installed,
+#   `package` will install the upstream package
+#   `source` from source
+#   `os` will install from standard OS repositories for example from EPEL on RedHat family.
 # @param install_setuid
 #   Whether to install the setuid portion of apptainer
 # @param version
@@ -151,7 +154,7 @@
 #   The template to use for /etc/subuid and /etc/subgid
 #
 class apptainer (
-  Enum['package','source'] $install_method = 'package',
+  Enum['package','source','os'] $install_method = 'package',
   Boolean $install_setuid = false,
   String $version = '1.1.3',
   Boolean $manage_repo = true,
