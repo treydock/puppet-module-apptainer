@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -99,7 +99,7 @@
         <span class='name'>install_method</span>
       
       
-        <span class='type'>(<tt>Enum['package','source']</tt>)</span>
+        <span class='type'>(<tt>Enum['package','source','os']</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&#39;package&#39;</tt>)</em>
@@ -107,7 +107,25 @@
       
         &mdash;
         <div class='inline'>
-<p>Sets how Apptainer will be installed</p>
+<p>Sets how Apptainer will be installed, <code>package</code> will install the upstream package <code>source</code> from source <code>os</code> will install from standard OS repositories for example from EPEL on RedHat family.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>install_setuid</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether to install the setuid portion of apptainer</p>
 </div>
       
     </li>
@@ -120,12 +138,30 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;1.0.1&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;1.1.3&#39;</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
 <p>Version of Apptainer to install</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>manage_repo</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Enable repositories for apptainer packages, e.g. EPEL on RedHat</p>
 </div>
       
     </li>
@@ -197,8 +233,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Sets if golang module should be included Only used when
-install_method=source</p>
+<p>Sets if golang module should be included Only used when install_method=source</p>
 </div>
       
     </li>
@@ -216,8 +251,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>Sets if Apptainer should be rebuilt on updates to Go via golang module Only
-used when install_method=source and manage_go=true</p>
+<p>Sets if Apptainer should be rebuilt on updates to Go via golang module Only used when install_method=source and manage_go=true</p>
 </div>
       
     </li>
@@ -235,8 +269,7 @@ used when install_method=source and manage_go=true</p>
       
         &mdash;
         <div class='inline'>
-<p>Base directory of where Apptainer source will be extracted Only used when
-install_method=source</p>
+<p>Base directory of where Apptainer source will be extracted Only used when install_method=source</p>
 </div>
       
     </li>
@@ -272,8 +305,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>Build flags to pass to mconfig when building Apptainer Only used when
-install_method=source</p>
+<p>Build flags to pass to mconfig when building Apptainer Only used when install_method=source</p>
 </div>
       
     </li>
@@ -291,8 +323,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>Environment variables to use when building from source Only used when
-install_method=source</p>
+<p>Environment variables to use when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -310,8 +341,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>The –prefix value when building from source Only used when
-install_method=source</p>
+<p>The –prefix value when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -329,8 +359,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>The –localstatedir value when building from source Only used when
-install_method=source</p>
+<p>The –localstatedir value when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -348,8 +377,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>The –sysconfdir value when building from source Only used when
-install_method=source</p>
+<p>The –sysconfdir value when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -1046,28 +1074,10 @@ install_method=source</p>
   
     <li>
       
-        <span class='name'>cryptsetup_path</span>
+        <span class='name'>binary_path</span>
       
       
-        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;/usr/sbin/cryptsetup&#39;</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>See apptainer.conf: <code>cryptsetup path</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>go_path</span>
-      
-      
-        <span class='type'>(<tt>Optional[Stdlib::Absolutepath]</tt>)</span>
+        <span class='type'>(<tt>Optional[String[1]]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
@@ -1075,43 +1085,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>See apptainer.conf: <code>go path</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>ldconfig_path</span>
-      
-      
-        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;/usr/sbin/ldconfig&#39;</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>See apptainer.conf: <code>ldconfig path</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>mksquashfs_path</span>
-      
-      
-        <span class='type'>(<tt>Optional[Stdlib::Absolutepath]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>See apptainer.conf: <code>mksquashfs path</code></p>
+<p>See apptainer.conf: <code>binary path</code></p>
 </div>
       
     </li>
@@ -1148,42 +1122,6 @@ install_method=source</p>
         &mdash;
         <div class='inline'>
 <p>See apptainer.conf: <code>mksquashfs mem</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>nvidia_container_cli_path</span>
-      
-      
-        <span class='type'>(<tt>Optional[Stdlib::Absolutepath]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>See apptainer.conf: <code>nvidia-container-cli path</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>unsquashfs_path</span>
-      
-      
-        <span class='type'>(<tt>Optional[Stdlib::Absolutepath]</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>See apptainer.conf: <code>unsquashfs path</code></p>
 </div>
       
     </li>
@@ -1280,6 +1218,24 @@ install_method=source</p>
   
     <li>
       
+        <span class='name'>systemd_cgroups</span>
+      
+      
+        <span class='type'>(<tt>Enum['yes','no']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;yes&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf: <code>systemd cgroups</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>namespace_users</span>
       
       
@@ -1291,8 +1247,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>List of uses to add to /etc/subuid and /etc/subgid to support user
-namespaces</p>
+<p>List of uses to add to /etc/subuid and /etc/subgid to support user namespaces</p>
 </div>
       
     </li>
@@ -1310,8 +1265,7 @@ namespaces</p>
       
         &mdash;
         <div class='inline'>
-<p>The beginning ID for /etc/subuid and /etc/subgid. The value is incremented
-For each user by start + namespace_id_range + 1</p>
+<p>The beginning ID for /etc/subuid and /etc/subgid. The value is incremented For each user by start + namespace_id_range + 1</p>
 </div>
       
     </li>
@@ -1363,6 +1317,7 @@ For each user by start + namespace_id_range + 1</p>
         <pre class="lines">
 
 
+156
 157
 158
 159
@@ -1458,14 +1413,18 @@ For each user by start + namespace_id_range + 1</p>
 249
 250
 251
-252</pre>
+252
+253
+254</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 157</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 156</span>
 
 class apptainer (
-  Enum[&#39;package&#39;,&#39;source&#39;] $install_method = &#39;package&#39;,
-  String $version = &#39;1.0.1&#39;,
+  Enum[&#39;package&#39;,&#39;source&#39;,&#39;os&#39;] $install_method = &#39;package&#39;,
+  Boolean $install_setuid = false,
+  String $version = &#39;1.1.3&#39;,
+  Boolean $manage_repo = true,
   Boolean $remove_singularity = false,
   # Package install
   String $package_name = &#39;apptainer&#39;,
@@ -1525,24 +1484,25 @@ class apptainer (
   Enum[&#39;tmpfs&#39;,&#39;ramfs&#39;] $memory_fs_type = &#39;tmpfs&#39;,
   Optional[Stdlib::Absolutepath] $cni_configuration_path = undef,
   Optional[Stdlib::Absolutepath] $cni_plugin_path = undef,
-  Stdlib::Absolutepath $cryptsetup_path = &#39;/usr/sbin/cryptsetup&#39;,
-  Optional[Stdlib::Absolutepath] $go_path = undef,
-  Stdlib::Absolutepath $ldconfig_path = &#39;/usr/sbin/ldconfig&#39;,
-  Optional[Stdlib::Absolutepath] $mksquashfs_path = undef,
+  Optional[String[1]] $binary_path = undef,
   Integer[0,default] $mksquashfs_procs = 0,
   Optional[String[1]] $mksquashfs_mem = undef,
-  Optional[Stdlib::Absolutepath] $nvidia_container_cli_path = undef,
-  Optional[Stdlib::Absolutepath] $unsquashfs_path = undef,
   Enum[&#39;yes&#39;,&#39;no&#39;] $shared_loop_devices = &#39;no&#39;,
   Optional[String] $image_driver = undef,
   Integer[0,default] $download_concurrency = 3,
   Integer[0,default] $download_part_size = 5242880,
   Integer[0,default] $download_buffer_size = 32768,
+  Enum[&#39;yes&#39;,&#39;no&#39;] $systemd_cgroups = &#39;yes&#39;,
   Array $namespace_users = [],
   Integer $namespace_begin_id = 65537,
   Integer $namespace_id_range = 65536,
   String $subid_template = &#39;apptainer/subid.erb&#39;,
 ) {
+
+  if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; and $manage_repo {
+    include epel
+    Class[&#39;epel&#39;] -&gt; Class[&quot;apptainer::install::${install_method}&quot;]
+  }
 
   contain &quot;apptainer::install::${install_method}&quot;
   contain apptainer::config

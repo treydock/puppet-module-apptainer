@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: apptainer::install::package
+  Puppet Class: apptainer::install::os
   
     &mdash; Documentation by YARD 0.9.28
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "puppet_classes::apptainer::install::package";
+  pathId = "puppet_classes::apptainer::install::os";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (a)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">apptainer::install::package</span>
+    <span class="title">apptainer::install::os</span>
   
 </div>
 
@@ -59,14 +59,14 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: apptainer::install::package</h1>
+      <div id="content"><h1>Puppet Class: apptainer::install::os</h1>
 <div class="box_info">
   
   
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/install/package.pp
+      manifests/install/os.pp
     </dd>
   </dl>
 </div>
@@ -114,49 +114,31 @@
 21
 22
 23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33</pre>
+24</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/install/package.pp', line 3</span>
+        <pre class="code"><span class="info file"># File 'manifests/install/os.pp', line 3</span>
 
-class apptainer::install::package {
+class apptainer::install::os {
   assert_private()
 
   if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; {
-    $source = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}-1.x86_64.rpm&quot;
-    $source_suid = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid-${apptainer::version}-1.x86_64.rpm&quot;
-    if $facts[&#39;apptainer_version&#39;] {
-      if versioncmp($apptainer::version, $facts[&#39;apptainer_version&#39;]) &lt; 0 {
-        $action = &#39;downgrade&#39;
-      } else {
-        $action = &#39;install&#39;
-      }
-    } else {
-      $action = &#39;install&#39;
+
+    package { &#39;apptainer&#39;:
+      ensure =&gt; $apptainer::version,
     }
-    exec { &quot;${action}-apptainer&quot;:
-      path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
-      command =&gt; &quot;${facts[&#39;package_provider&#39;]} ${action} -y ${source}&quot;,
-      unless  =&gt; &quot;rpm -q &#39;apptainer-${apptainer::version}&#39;&quot;,
+
+    $_suid_ensure = $apptainer::install_setuid ? {
+      true    =&gt; $apptainer::version,
+      default =&gt; &#39;absent&#39;,
     }
-    if $apptainer::install_setuid {
-      exec { &quot;${action}-apptainer-suid&quot;:
-        path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
-        command =&gt; &quot;${facts[&#39;package_provider&#39;]} ${action} -y ${source_suid}&quot;,
-        unless  =&gt; &quot;rpm -q &#39;apptainer-suid-${apptainer::version}&#39;&quot;,
-      }
+
+    package { &#39;apptainer-suid&#39;:
+      ensure =&gt; $_suid_ensure,
     }
+
   } else {
-    fail(&#39;Module apptainer only supports package installs on RedHat or Debian os family&#39;)
+    fail(&#39;Module apptainer only supports os installs on RedHat&#39;)
   }
 }</pre>
       </td>

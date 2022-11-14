@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer::install::source
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -183,7 +183,14 @@
 90
 91
 92
-93</pre>
+93
+94
+95
+96
+97
+98
+99
+100</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/install/source.pp', line 3</span>
@@ -205,12 +212,19 @@ class apptainer::install::source {
   }
 
   $source_dir = &quot;${apptainer::source_base_dir}/apptainer-${apptainer::version}&quot;
+  if $apptainer::install_setuid {
+    $setuid_flags = {
+      &#39;with-suid&#39; =&gt; true,
+    }
+  } else {
+    $setuid_flags = {}
+  }
   $base_build_flags = {
     &#39;prefix&#39; =&gt; $apptainer::prefix,
     &#39;localstatedir&#39; =&gt; $apptainer::localstatedir,
     &#39;sysconfdir&#39; =&gt; $apptainer::sysconfdir,
   }
-  $build_flags_mapped = ($base_build_flags + $apptainer::build_flags).map |$key, $value| {
+  $build_flags_mapped = ($base_build_flags + $setuid_flags + $apptainer::build_flags).map |$key, $value| {
     if $value == &#39;&#39; or $value =~ Boolean {
       &quot;--${key}&quot;
     } else {

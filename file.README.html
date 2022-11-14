@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -60,10 +60,7 @@
       <div id="content"><div id='filecontents'>
 <h1 id="label-puppet-module-apptainer">puppet-module-apptainer</h1>
 
-<p><a href="https://forge.puppetlabs.com/treydock/apptainer"><img
-src="http://img.shields.io/puppetforge/v/treydock/apptainer.svg"></a> <a
-href="https://github.com/treydock/puppet-module-apptainer/actions?query=workflow%3ACI"><img
-src="https://github.com/treydock/puppet-module-apptainer/workflows/CI/badge.svg?branch=master"></a></p>
+<p><a href="https://forge.puppetlabs.com/treydock/apptainer"><img src="http://img.shields.io/puppetforge/v/treydock/apptainer.svg"></a> <a href="https://github.com/treydock/puppet-module-apptainer/actions?query=workflow%3ACI"><img src="https://github.com/treydock/puppet-module-apptainer/workflows/CI/badge.svg?branch=master"></a></p>
 
 <h4 id="label-Table+of+Contents">Table of Contents</h4>
 <ol><li>
@@ -71,14 +68,12 @@ src="https://github.com/treydock/puppet-module-apptainer/workflows/CI/badge.svg?
 </li><li>
 <p><a href="#usage">Usage - Configuration options</a></p>
 </li><li>
-<p><a href="#reference">Reference - Parameter and detailed reference to all
-options</a></p>
+<p><a href="#reference">Reference - Parameter and detailed reference to all options</a></p>
 </li></ol>
 
 <h2 id="label-Overview">Overview</h2>
 
-<p>This module manages the apptainer installation and configuration of
-apptainer.conf.</p>
+<p>This module manages the apptainer installation and configuration of apptainer.conf.</p>
 
 <p>RedHat based systems will by default install from apptainer package</p>
 
@@ -93,15 +88,12 @@ apptainer.conf.</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_apptainer'>apptainer</span>
 </code></pre>
 
-<p>For both package and source installs, it&#39;s best to define the desired
-version. This Puppet module supports both upgrades and downgrades of
-Apptainer.</p>
+<p>For both package and source installs, it&#39;s best to define the desired version. This Puppet module supports both upgrades and downgrades of Apptainer.</p>
 
 <pre class="code ruby"><code class="ruby">apptainer::version: &#39;1.0.1&#39;
 </code></pre>
 
-<p>The following Hiera example of building from source (default for Debian
-based systems) with several additional options passed.</p>
+<p>The following Hiera example of building from source (default for Debian based systems) with several additional options passed.</p>
 
 <pre class="code ruby"><code class="ruby">apptainer::version: &#39;1.0.1&#39;
 apptainer::install_method: source
@@ -122,8 +114,7 @@ apptainer::localstatedir: /opt/apptainer/var
     source_dir: examples/plugins/log-plugin
 </code></pre>
 
-<p>If replacing Singularity with Apptainer, it&#39;s possible to have this
-module cleanup Singularity to avoid conflicts:</p>
+<p>If replacing Singularity with Apptainer, it&#39;s possible to have this module cleanup Singularity to avoid conflicts:</p>
 
 <pre class="code ruby"><code class="ruby">apptainer::remove_singularity: true
 </code></pre>
@@ -141,8 +132,7 @@ module cleanup Singularity to avoid conflicts:</p>
 
 <h2 id="label-Reference">Reference</h2>
 
-<p><a
-href="http://treydock.github.io/puppet-module-apptainer/">treydock.github.io/puppet-module-apptainer/</a></p>
+<p><a href="http://treydock.github.io/puppet-module-apptainer/">treydock.github.io/puppet-module-apptainer/</a></p>
 </div></div>
 
       <div id="footer">
