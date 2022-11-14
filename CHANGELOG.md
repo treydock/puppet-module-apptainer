@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v1.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v1.0.0) (2022-11-14)
+
+[Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v0.1.1...v1.0.0)
+
+### Changed
+
+- Fix plugin testing for 1.1.x, update parameters to match apptainer 1.1.x configs [\#6](https://github.com/treydock/puppet-module-apptainer/pull/6) ([treydock](https://github.com/treydock))
+- Ensure apptainer 1.1.x support [\#5](https://github.com/treydock/puppet-module-apptainer/pull/5) ([treydock](https://github.com/treydock))
+- Add install\_setuid to optionally add setuid bits [\#4](https://github.com/treydock/puppet-module-apptainer/pull/4) ([treydock](https://github.com/treydock))
+
+### Added
+
+- Support installation from EPEL [\#3](https://github.com/treydock/puppet-module-apptainer/pull/3) ([traylenator](https://github.com/traylenator))
+
 ## [v0.1.1](https://github.com/treydock/puppet-module-apptainer/tree/v0.1.1) (2022-05-12)
 
 [Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v0.1.0...v0.1.1)

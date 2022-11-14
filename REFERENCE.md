@@ -13,6 +13,7 @@
 #### Private Classes
 
 * `apptainer::config`: Private class
+* `apptainer::install::os`: Private class
 * `apptainer::install::package`: Private class
 * `apptainer::install::source`: Private class
 * `apptainer::singularity`: Private class
@@ -40,7 +41,9 @@ include ::apptainer
 The following parameters are available in the `apptainer` class:
 
 * [`install_method`](#install_method)
+* [`install_setuid`](#install_setuid)
 * [`version`](#version)
+* [`manage_repo`](#manage_repo)
 * [`remove_singularity`](#remove_singularity)
 * [`package_name`](#package_name)
 * [`source_dependencies`](#source_dependencies)
@@ -91,19 +94,15 @@ The following parameters are available in the `apptainer` class:
 * [`memory_fs_type`](#memory_fs_type)
 * [`cni_configuration_path`](#cni_configuration_path)
 * [`cni_plugin_path`](#cni_plugin_path)
-* [`cryptsetup_path`](#cryptsetup_path)
-* [`go_path`](#go_path)
-* [`ldconfig_path`](#ldconfig_path)
-* [`mksquashfs_path`](#mksquashfs_path)
+* [`binary_path`](#binary_path)
 * [`mksquashfs_procs`](#mksquashfs_procs)
 * [`mksquashfs_mem`](#mksquashfs_mem)
-* [`nvidia_container_cli_path`](#nvidia_container_cli_path)
-* [`unsquashfs_path`](#unsquashfs_path)
 * [`shared_loop_devices`](#shared_loop_devices)
 * [`image_driver`](#image_driver)
 * [`download_concurrency`](#download_concurrency)
 * [`download_part_size`](#download_part_size)
 * [`download_buffer_size`](#download_buffer_size)
+* [`systemd_cgroups`](#systemd_cgroups)
 * [`namespace_users`](#namespace_users)
 * [`namespace_begin_id`](#namespace_begin_id)
 * [`namespace_id_range`](#namespace_id_range)
@@ -111,11 +110,22 @@ The following parameters are available in the `apptainer` class:
 
 ##### <a name="install_method"></a>`install_method`
 
-Data type: `Enum['package','source']`
+Data type: `Enum['package','source','os']`
 
-Sets how Apptainer will be installed
+Sets how Apptainer will be installed,
+`package` will install the upstream package
+`source` from source
+`os` will install from standard OS repositories for example from EPEL on RedHat family.
 
 Default value: `'package'`
+
+##### <a name="install_setuid"></a>`install_setuid`
+
+Data type: `Boolean`
+
+Whether to install the setuid portion of apptainer
+
+Default value: ``false``
 
 ##### <a name="version"></a>`version`
 
@@ -123,7 +133,15 @@ Data type: `String`
 
 Version of Apptainer to install
 
-Default value: `'1.0.1'`
+Default value: `'1.1.3'`
+
+##### <a name="manage_repo"></a>`manage_repo`
+
+Data type: `Boolean`
+
+Enable repositories for apptainer packages, e.g. EPEL on RedHat
+
+Default value: ``true``
 
 ##### <a name="remove_singularity"></a>`remove_singularity`
 
@@ -542,35 +560,11 @@ See apptainer.conf: `cni plugin path`
 
 Default value: ``undef``
 
-##### <a name="cryptsetup_path"></a>`cryptsetup_path`
+##### <a name="binary_path"></a>`binary_path`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `Optional[String[1]]`
 
-See apptainer.conf: `cryptsetup path`
-
-Default value: `'/usr/sbin/cryptsetup'`
-
-##### <a name="go_path"></a>`go_path`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-See apptainer.conf: `go path`
-
-Default value: ``undef``
-
-##### <a name="ldconfig_path"></a>`ldconfig_path`
-
-Data type: `Stdlib::Absolutepath`
-
-See apptainer.conf: `ldconfig path`
-
-Default value: `'/usr/sbin/ldconfig'`
-
-##### <a name="mksquashfs_path"></a>`mksquashfs_path`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-See apptainer.conf: `mksquashfs path`
+See apptainer.conf: `binary path`
 
 Default value: ``undef``
 
@@ -587,22 +581,6 @@ Default value: `0`
 Data type: `Optional[String[1]]`
 
 See apptainer.conf: `mksquashfs mem`
-
-Default value: ``undef``
-
-##### <a name="nvidia_container_cli_path"></a>`nvidia_container_cli_path`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-See apptainer.conf: `nvidia-container-cli path`
-
-Default value: ``undef``
-
-##### <a name="unsquashfs_path"></a>`unsquashfs_path`
-
-Data type: `Optional[Stdlib::Absolutepath]`
-
-See apptainer.conf: `unsquashfs path`
 
 Default value: ``undef``
 
@@ -645,6 +623,14 @@ Data type: `Integer[0,default]`
 See apptainer.conf: `download buffer size`
 
 Default value: `32768`
+
+##### <a name="systemd_cgroups"></a>`systemd_cgroups`
+
+Data type: `Enum['yes','no']`
+
+See apptainer.conf: `systemd cgroups`
+
+Default value: `'yes'`
 
 ##### <a name="namespace_users"></a>`namespace_users`
 
