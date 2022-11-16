@@ -37,6 +37,7 @@ apptainer::version: '1.0.1'
 The following Hiera example of building from source (default for Debian based systems) with several additional options passed.
 
 ```yaml
+golang::version: '1.19.2'
 apptainer::version: '1.0.1'
 apptainer::install_method: source
 apptainer::build_flags:
@@ -66,9 +67,7 @@ apptainer::remove_singularity: true
 Enabling Singularity removal will result in the following actions:
 
 * Remove /etc/singularity
-* Remove /usr/local/sbin/singularity-mconfig.sh
-* Remove /opt/singularity
-* Remove /opt/singularity-3*
+* Remove /usr/bin/singularity and /bin/singularity if doing source install
 
 ## Reference
 

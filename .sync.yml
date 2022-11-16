@@ -4,7 +4,7 @@
     set:
       - el7
       - el8
-      - ---el9
+      - el9
       - debian-10
       - ubuntu-2004
 .gitlab-ci.yml:

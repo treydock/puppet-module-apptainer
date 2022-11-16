@@ -159,6 +159,9 @@ describe 'apptainer class:' do
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
+      class { 'golang':
+        version => '1.19.2',
+      }
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
@@ -197,6 +200,9 @@ describe 'apptainer class:' do
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
+      class { 'golang':
+        version => '1.19.2',
+      }
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
@@ -231,6 +237,9 @@ describe 'apptainer class:' do
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
+      class { 'golang':
+        version => '1.19.2',
+      }
       class { 'apptainer':
         version         => '#{version}',
         install_method  => 'source',
