@@ -13,9 +13,9 @@
 
 This module manages the apptainer installation and configuration of apptainer.conf.
 
-RedHat based systems will by default install from apptainer package
+RedHat and Debian (except Debian 10) based systems will by default install from apptainer package
 
-Debian based systems will by default install from source
+Debian 10 will by default install from source
 
 ## Usage
 
@@ -67,7 +67,6 @@ apptainer::remove_singularity: true
 Enabling Singularity removal will result in the following actions:
 
 * Remove /etc/singularity
-* Remove /usr/bin/singularity and /bin/singularity if doing source install
 
 ## Reference
 

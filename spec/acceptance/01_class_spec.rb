@@ -54,7 +54,7 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'with default parameters', if: fact('os.family') == 'RedHat' do
+  context 'with package install', if: default_install_method == 'package' do
     let(:version) { '1.1.0' }
 
     it 'runs successfully' do
@@ -88,7 +88,7 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'when upgrades package install', if: fact('os.family') == 'RedHat' do
+  context 'when upgrades package install', if: default_install_method == 'package' do
     let(:version) { '1.1.3' }
 
     it 'runs successfully' do
@@ -121,7 +121,7 @@ describe 'apptainer class:' do
     end
   end
 
-  context 'when downgrade package install', if: fact('os.family') == 'RedHat' do
+  context 'when downgrade package install', if: default_install_method == 'package' do
     let(:version) { '1.1.0' }
 
     it 'runs successfully' do
