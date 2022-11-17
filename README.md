@@ -34,7 +34,7 @@ This Puppet module supports both upgrades and downgrades of Apptainer.
 apptainer::version: '1.0.1'
 ```
 
-The following Hiera example of building from source (default for Debian based systems) with several additional options passed.
+The following Hiera example of building from source (default for Debian 10) with several additional options passed.
 
 ```yaml
 golang::version: '1.19.2'
