@@ -80,9 +80,10 @@ options</a></p>
 <p>This module manages the apptainer installation and configuration of
 apptainer.conf.</p>
 
-<p>RedHat based systems will by default install from apptainer package</p>
+<p>RedHat and Debian (except Debian 10) based systems will by default install
+from apptainer package</p>
 
-<p>Debian based systems will by default install from source</p>
+<p>Debian 10 will by default install from source</p>
 
 <h2 id="label-Usage">Usage</h2>
 
@@ -100,8 +101,8 @@ Apptainer.</p>
 <pre class="code ruby"><code class="ruby">apptainer::version: &#39;1.0.1&#39;
 </code></pre>
 
-<p>The following Hiera example of building from source (default for Debian
-based systems) with several additional options passed.</p>
+<p>The following Hiera example of building from source (default for Debian 10)
+with several additional options passed.</p>
 
 <pre class="code ruby"><code class="ruby">golang::version: &#39;1.19.2&#39;
 apptainer::version: &#39;1.0.1&#39;
@@ -132,8 +133,6 @@ module cleanup Singularity to avoid conflicts:</p>
 <p>Enabling Singularity removal will result in the following actions:</p>
 <ul><li>
 <p>Remove /etc/singularity</p>
-</li><li>
-<p>Remove /usr/bin/singularity and /bin/singularity if doing source install</p>
 </li></ul>
 
 <h2 id="label-Reference">Reference</h2>

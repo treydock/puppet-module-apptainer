@@ -123,7 +123,44 @@
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/install/package.pp', line 3</span>
@@ -153,6 +190,43 @@ class apptainer::install::package {
         path    =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
         command =&gt; &quot;${facts[&#39;package_provider&#39;]} ${action} -y ${source_suid}&quot;,
         unless  =&gt; &quot;rpm -q &#39;apptainer-suid-${apptainer::version}&#39;&quot;,
+      }
+    }
+  } elsif $facts[&#39;os&#39;][&#39;family&#39;] == &#39;Debian&#39; {
+    $source = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}_amd64.deb&quot;
+    $source_path = &quot;/usr/local/src/apptainer_${apptainer::version}_amd64.deb&quot;
+    $source_suid = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}_amd64.deb&quot;
+    $source_suid_path = &quot;/usr/local/src/apptainer-suid_${apptainer::version}_amd64.deb&quot;
+    archive { $source_path:
+      source  =&gt; $source,
+      extract =&gt; false,
+      cleanup =&gt; false,
+      user    =&gt; &#39;root&#39;,
+      group   =&gt; &#39;root&#39;,
+    }
+    exec { &#39;install-apptainer&#39;:
+      path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
+      command     =&gt; &quot;apt install --force-yes -y ${source_path}&quot;,
+      environment =&gt; [
+        &#39;DEBIAN_FRONTEND=noninteractive&#39;,
+      ],
+      unless      =&gt; &quot;dpkg -s apptainer | grep &#39;Version: ${apptainer::version}&#39;&quot;,
+    }
+    if $apptainer::install_setuid {
+      archive { $source_suid_path:
+        source  =&gt; $source_suid,
+        extract =&gt; false,
+        cleanup =&gt; false,
+        user    =&gt; &#39;root&#39;,
+        group   =&gt; &#39;root&#39;,
+      }
+      exec { &#39;install-apptainer-suid&#39;:
+        path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
+        command     =&gt; &quot;apt install --force-yes -y ${source_suid_path}&quot;,
+        environment =&gt; [
+          &#39;DEBIAN_FRONTEND=noninteractive&#39;,
+        ],
+        unless      =&gt; &quot;dpkg -s apptainer-suid | grep &#39;Version: ${apptainer::version}&#39;&quot;,
       }
     }
   } else {
