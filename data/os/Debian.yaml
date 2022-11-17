@@ -1,5 +1,6 @@
 ---
-apptainer::install_method: source
+apptainer::install_method: package
+apptainer::package_name: apptainer
 apptainer::source_dependencies:
   - build-essential
   - uuid-dev

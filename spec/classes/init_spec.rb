@@ -13,7 +13,7 @@ describe 'apptainer' do
 
       it { is_expected.to create_class('apptainer') }
 
-      describe 'apptainer::install::package', if: facts[:os]['family'] == 'RedHat' do
+      describe 'apptainer::install::package', if: default_install_method(facts) == 'package' do
         it { is_expected.to contain_class('apptainer::install::package').that_comes_before('Class[apptainer::config]') }
         it { is_expected.not_to contain_class('apptainer::install::source') }
         it { is_expected.to contain_exec('install-apptainer') }
@@ -54,7 +54,7 @@ describe 'apptainer' do
         end
       end
 
-      describe 'apptainer::install::source', if: facts[:os]['family'] == 'Debian' do
+      describe 'apptainer::install::source', if: default_install_method(facts) == 'source' do
         it { is_expected.not_to contain_class('apptainer::install::package') }
         it { is_expected.to contain_class('apptainer::install::source').that_comes_before('Class[apptainer::config]') }
 

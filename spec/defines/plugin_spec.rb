@@ -10,7 +10,7 @@ describe 'apptainer::plugin' do
       end
 
       let :title do
-        'github.com/apptainer/apptainer/log-plugin'
+        'example.com/log-plugin'
       end
 
       let(:version) { '1.1.3' }
@@ -21,10 +21,10 @@ describe 'apptainer::plugin' do
 
       let(:pre_condition) { "class { 'apptainer': install_method => 'source' }" }
 
-      it { is_expected.not_to contain_exec('apptainer-plugin-uninstall-for-upgrade-github.com/apptainer/apptainer/log-plugin') }
+      it { is_expected.not_to contain_exec('apptainer-plugin-uninstall-for-upgrade-example.com/log-plugin') }
 
       it do
-        is_expected.to contain_exec('apptainer-plugin-compile-github.com/apptainer/apptainer/log-plugin').with(
+        is_expected.to contain_exec('apptainer-plugin-compile-example.com/log-plugin').with(
           path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
           environment: ['HOME=/root'],
           command: 'apptainer plugin compile examples/plugins/log-plugin',
@@ -35,7 +35,7 @@ describe 'apptainer::plugin' do
       end
 
       it do
-        is_expected.to contain_exec('apptainer-plugin-recompile-github.com/apptainer/apptainer/log-plugin').with(
+        is_expected.to contain_exec('apptainer-plugin-recompile-example.com/log-plugin').with(
           path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
           environment: ['HOME=/root'],
           command: 'apptainer plugin compile examples/plugins/log-plugin',
@@ -43,37 +43,37 @@ describe 'apptainer::plugin' do
           onlyif: "test -f /opt/apptainer-#{version}/examples/plugins/log-plugin/log-plugin.sif",
           refreshonly: 'true',
           require: 'Class[Apptainer::Install::Source]',
-          notify: 'Exec[apptainer-plugin-reinstall-github.com/apptainer/apptainer/log-plugin]',
+          notify: 'Exec[apptainer-plugin-reinstall-example.com/log-plugin]',
         )
       end
 
       it do
-        is_expected.to contain_exec('apptainer-plugin-install-github.com/apptainer/apptainer/log-plugin').with(
+        is_expected.to contain_exec('apptainer-plugin-install-example.com/log-plugin').with(
           path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
           command: "apptainer plugin install /opt/apptainer-#{version}/examples/plugins/log-plugin/log-plugin.sif",
-          unless: "apptainer plugin list | grep 'github.com/apptainer/apptainer/log-plugin'",
-          require: 'Exec[apptainer-plugin-compile-github.com/apptainer/apptainer/log-plugin]',
+          unless: "apptainer plugin list | grep 'example.com/log-plugin'",
+          require: 'Exec[apptainer-plugin-compile-example.com/log-plugin]',
         )
       end
 
       it do
-        is_expected.to contain_exec('apptainer-plugin-reinstall-github.com/apptainer/apptainer/log-plugin').with(
+        is_expected.to contain_exec('apptainer-plugin-reinstall-example.com/log-plugin').with(
           path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
           command: "apptainer plugin install /opt/apptainer-#{version}/examples/plugins/log-plugin/log-plugin.sif",
-          onlyif: "apptainer plugin list | grep 'github.com/apptainer/apptainer/log-plugin'",
+          onlyif: "apptainer plugin list | grep 'example.com/log-plugin'",
           refreshonly: 'true',
-          subscribe: 'Exec[apptainer-plugin-compile-github.com/apptainer/apptainer/log-plugin]',
+          subscribe: 'Exec[apptainer-plugin-compile-example.com/log-plugin]',
         )
       end
 
       it do
-        is_expected.to contain_exec('apptainer-plugin-enable-github.com/apptainer/apptainer/log-plugin').with(
+        is_expected.to contain_exec('apptainer-plugin-enable-example.com/log-plugin').with(
           path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
-          command: 'apptainer plugin enable github.com/apptainer/apptainer/log-plugin',
-          unless: "apptainer plugin list | grep 'github.com/apptainer/apptainer/log-plugin' | grep yes",
+          command: 'apptainer plugin enable example.com/log-plugin',
+          unless: "apptainer plugin list | grep 'example.com/log-plugin' | grep yes",
           require: [
-            'Exec[apptainer-plugin-install-github.com/apptainer/apptainer/log-plugin]',
-            'Exec[apptainer-plugin-reinstall-github.com/apptainer/apptainer/log-plugin]'
+            'Exec[apptainer-plugin-install-example.com/log-plugin]',
+            'Exec[apptainer-plugin-reinstall-example.com/log-plugin]'
           ],
         )
       end
@@ -83,10 +83,10 @@ describe 'apptainer::plugin' do
         let(:pre_condition) { "class { 'apptainer': version => '1.0.2', install_method => 'source' }" }
 
         it do
-          is_expected.to contain_exec('apptainer-plugin-uninstall-for-upgrade-github.com/apptainer/apptainer/log-plugin').with(
+          is_expected.to contain_exec('apptainer-plugin-uninstall-for-upgrade-example.com/log-plugin').with(
             path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
-            command: 'apptainer plugin uninstall github.com/apptainer/apptainer/log-plugin',
-            onlyif: "apptainer plugin list | grep 'github.com/apptainer/apptainer/log-plugin'",
+            command: 'apptainer plugin uninstall example.com/log-plugin',
+            onlyif: "apptainer plugin list | grep 'example.com/log-plugin'",
             before: 'Class[Apptainer::Install::Source]',
           )
         end
@@ -96,10 +96,10 @@ describe 'apptainer::plugin' do
         let(:params) { { ensure: 'absent' } }
 
         it do
-          is_expected.to contain_exec('apptainer-plugin-uninstall-github.com/apptainer/apptainer/log-plugin').with(
+          is_expected.to contain_exec('apptainer-plugin-uninstall-example.com/log-plugin').with(
             path: '/usr/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin',
-            command: 'apptainer plugin uninstall github.com/apptainer/apptainer/log-plugin',
-            onlyif: "apptainer plugin list | grep 'github.com/apptainer/apptainer/log-plugin'",
+            command: 'apptainer plugin uninstall example.com/log-plugin',
+            onlyif: "apptainer plugin list | grep 'example.com/log-plugin'",
           )
         end
       end

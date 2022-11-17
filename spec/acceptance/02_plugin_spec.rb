@@ -12,6 +12,9 @@ describe 'apptainer::plugin' do
       }
       SETUP_PP
       pp = <<-PUPPET_PP
+      class { 'golang':
+        version => '1.19.2',
+      }
       class { 'apptainer':
         version        => '1.1.0',
         install_method => 'source',
@@ -47,6 +50,9 @@ describe 'apptainer::plugin' do
       }
       SETUP_PP
       pp = <<-PUPPET_PP
+      class { 'golang':
+        version => '1.19.2',
+      }
       class { 'apptainer':
         version        => '1.1.3',
         install_method => 'source',
