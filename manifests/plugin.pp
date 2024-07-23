@@ -102,5 +102,4 @@ define apptainer::plugin (
       onlyif  => "apptainer plugin list | grep '${name}'",
     }
   }
-
 }

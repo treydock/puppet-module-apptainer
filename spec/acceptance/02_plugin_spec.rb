@@ -6,17 +6,38 @@ describe 'apptainer::plugin' do
   context 'when installs log plugin' do
     it 'runs successfully' do
       setup_pp = <<-SETUP_PP
-      class { 'rsyslog::client':
-        log_local  => true,
-        log_remote => false,
+      class { 'rsyslog::config':
+        global_config => {
+          'workDirectory' => { 'value' => '/var/lib/rsyslog' },
+        },
+        modules => {
+          'imuxsock' => { 'priority' => 5 },
+          'imklog' => { 'priority' => 6 },
+          'imjournal' => {
+            'priority' => 7,
+            'config' => { 'StateFile' => 'imjournal.state' },
+          },
+        },
+        actions => {
+          'any' => {
+            'type' => 'omfile',
+            'facility' => 'default',
+            'config' => {
+              'file' => '/var/log/messages',
+              'fileCreateMode' => '0644',
+              'fileOwner' => 'root',
+              'fileGroup' => 'root',
+            }
+          }
+        }
       }
       SETUP_PP
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.19.2',
+        version => '1.21.12',
       }
       class { 'apptainer':
-        version        => '1.1.0',
+        version        => '1.3.2',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],
@@ -32,7 +53,7 @@ describe 'apptainer::plugin' do
       apply_manifest(pp, catch_changes: true)
     end
 
-    describe command('apptainer pull /tmp/lolcow.sif library://lolcow ; apptainer run /tmp/lolcow.sif ; sleep 5') do
+    describe command('apptainer pull /tmp/lolcow.sif docker://sylabsio/lolcow ; apptainer run /tmp/lolcow.sif ; sleep 5') do
       its(:exit_status) { is_expected.to eq(0) }
     end
 
@@ -44,17 +65,38 @@ describe 'apptainer::plugin' do
   context 'when reinstalls log plugin during upgrade' do
     it 'runs successfully' do
       setup_pp = <<-SETUP_PP
-      class { 'rsyslog::client':
-        log_local  => true,
-        log_remote => false,
+      class { 'rsyslog::config':
+        global_config => {
+          'workDirectory' => { 'value' => '/var/lib/rsyslog' },
+        },
+        modules => {
+          'imuxsock' => { 'priority' => 5 },
+          'imklog' => { 'priority' => 6 },
+          'imjournal' => {
+            'priority' => 7,
+            'config' => { 'StateFile' => 'imjournal.state' },
+          },
+        },
+        actions => {
+          'any' => {
+            'type' => 'omfile',
+            'facility' => 'default',
+            'config' => {
+              'file' => '/var/log/messages',
+              'fileCreateMode' => '0644',
+              'fileOwner' => 'root',
+              'fileGroup' => 'root',
+            }
+          }
+        }
       }
       SETUP_PP
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.19.2',
+        version => '1.22.5',
       }
       class { 'apptainer':
-        version        => '1.1.3',
+        version        => '1.3.3',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],

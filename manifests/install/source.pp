@@ -43,19 +43,19 @@ class apptainer::install::source {
   $build_env = ($base_build_env + $apptainer::build_env).map |$key, $value| { "${key}=${value}" }
 
   file { 'apptainer-mconfig':
-      ensure  => 'file',
-      path    => $apptainer::source_mconfig_path,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      content => join([
+    ensure  => 'file',
+    path    => $apptainer::source_mconfig_path,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => join([
         '#!/bin/bash',
         '# File managed by Puppet, do not edit',
         "cd ${source_dir}",
         "./mconfig ${build_flags}",
         '',
-      ], "\n")
-    }
+    ], "\n"),
+  }
 
   file { $source_dir:
     ensure => 'directory',
@@ -64,17 +64,17 @@ class apptainer::install::source {
     mode   => '0755',
   }
   -> archive { 'apptainer-source':
-      path            => "/tmp/apptainer-${apptainer::version}.tar.gz",
-      source          => "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}.tar.gz",
-      extract         => true,
-      extract_path    => $source_dir,
-      extract_command => 'tar xfz %s --strip-components=1',
-      creates         => "${source_dir}/mconfig",
-      cleanup         => true,
-      user            => 'root',
-      group           => 'root',
-      notify          => Exec['apptainer-mconfig'],
-    }
+    path            => "/tmp/apptainer-${apptainer::version}.tar.gz",
+    source          => "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}.tar.gz",
+    extract         => true,
+    extract_path    => $source_dir,
+    extract_command => 'tar xfz %s --strip-components=1',
+    creates         => "${source_dir}/mconfig",
+    cleanup         => true,
+    user            => 'root',
+    group           => 'root',
+    notify          => Exec['apptainer-mconfig'],
+  }
   exec { 'apptainer-mconfig':
     path        => $apptainer::source_exec_path,
     environment => $build_env,

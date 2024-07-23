@@ -105,6 +105,12 @@
 #   See apptainer.conf: `limit container paths`
 # @param allow_containers
 #   See apptainer.conf: `allow containers`
+# @param allow_setuid_mount_encrypted
+#   See apptainer.conf `allow setuid-mount encrypted`
+# @param allow_setuid_mount_squashfs
+#   See apptainer.conf `allow setuid-mount squashfs`
+# @param allow_setuid_mount_extfs
+#   See apptainer.conf `allow setuid-mount extfs`
 # @param allow_net_users
 #   See apptainer.conf: `allow net users`
 # @param allow_net_groups
@@ -143,6 +149,10 @@
 #   See apptainer.conf: `download buffer size`
 # @param systemd_cgroups
 #   See apptainer.conf: `systemd cgroups`
+# @param apptheus_socket_path
+#   See apptainer.conf `apptheus socket path`
+# @param allow_monitoring
+#   See apptainer.conf `allow monitoring`
 # @param namespace_users
 #   List of uses to add to /etc/subuid and /etc/subgid to support user namespaces
 # @param namespace_begin_id
@@ -156,7 +166,7 @@
 class apptainer (
   Enum['package','source','os'] $install_method = 'package',
   Boolean $install_setuid = false,
-  String $version = '1.1.3',
+  String $version = '1.3.3',
   Boolean $manage_repo = true,
   Boolean $remove_singularity = false,
   # Package install
@@ -193,10 +203,10 @@ class apptainer (
   Array[Stdlib::Absolutepath] $bind_paths = ['/etc/localtime', '/etc/hosts'],
   Enum['yes','no'] $user_bind_control = 'yes',
   Enum['yes','no'] $enable_fusemount = 'yes',
-  Enum['yes','no','try'] $enable_overlay = 'try',
-  Enum['yes','no','try','driver'] $enable_underlay = 'yes',
+  Enum['yes','no','try','driver'] $enable_overlay = 'yes',
+  Enum['yes','no','preferred'] $enable_underlay = 'yes',
   Enum['yes','no'] $mount_slave = 'yes',
-  Integer $sessiondir_max_size = 16,
+  Integer $sessiondir_max_size = 64,
   Optional[Array] $limit_container_owners = undef,
   Optional[Array] $limit_container_groups = undef,
   Optional[Array] $limit_container_paths = undef,
@@ -207,6 +217,9 @@ class apptainer (
     'extfs' => 'yes',
     'dir' => 'yes',
   },
+  Optional[Enum['yes','no']] $allow_setuid_mount_encrypted = undef,
+  Optional[Enum['yes','no','iflimited']] $allow_setuid_mount_squashfs = undef,
+  Optional[Enum['yes','no']] $allow_setuid_mount_extfs = undef,
   Array $allow_net_users = [],
   Array $allow_net_groups = [],
   Array $allow_net_networks = [],
@@ -226,12 +239,13 @@ class apptainer (
   Integer[0,default] $download_part_size = 5242880,
   Integer[0,default] $download_buffer_size = 32768,
   Enum['yes','no'] $systemd_cgroups = 'yes',
+  Stdlib::Absolutepath $apptheus_socket_path = '/run/apptheus/gateway.sock',
+  Enum['yes','no'] $allow_monitoring = 'no',
   Array $namespace_users = [],
   Integer $namespace_begin_id = 65537,
   Integer $namespace_id_range = 65536,
   String $subid_template = 'apptainer/subid.erb',
 ) {
-
   if $facts['os']['family'] == 'RedHat' and $manage_repo {
     include epel
     Class['epel'] -> Class["apptainer::install::${install_method}"]
