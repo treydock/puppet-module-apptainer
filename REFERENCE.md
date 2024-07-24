@@ -20,7 +20,7 @@
 
 ### Defined types
 
-* [`apptainer::plugin`](#apptainerplugin): Manage Apptainer plugin
+* [`apptainer::plugin`](#apptainer--plugin): Manage Apptainer plugin
 
 ## Classes
 
@@ -40,75 +40,80 @@ include ::apptainer
 
 The following parameters are available in the `apptainer` class:
 
-* [`install_method`](#install_method)
-* [`install_setuid`](#install_setuid)
-* [`version`](#version)
-* [`manage_repo`](#manage_repo)
-* [`remove_singularity`](#remove_singularity)
-* [`package_name`](#package_name)
-* [`source_dependencies`](#source_dependencies)
-* [`manage_go`](#manage_go)
-* [`rebuild_on_go`](#rebuild_on_go)
-* [`source_base_dir`](#source_base_dir)
-* [`source_mconfig_path`](#source_mconfig_path)
-* [`build_flags`](#build_flags)
-* [`build_env`](#build_env)
-* [`prefix`](#prefix)
-* [`localstatedir`](#localstatedir)
-* [`sysconfdir`](#sysconfdir)
-* [`source_exec_path`](#source_exec_path)
-* [`plugins`](#plugins)
-* [`config_path`](#config_path)
-* [`config_template`](#config_template)
-* [`allow_setuid`](#allow_setuid)
-* [`max_loop_devices`](#max_loop_devices)
-* [`allow_pid_ns`](#allow_pid_ns)
-* [`config_passwd`](#config_passwd)
-* [`config_group`](#config_group)
-* [`config_resolv_conf`](#config_resolv_conf)
-* [`mount_proc`](#mount_proc)
-* [`mount_sys`](#mount_sys)
-* [`mount_dev`](#mount_dev)
-* [`mount_devpts`](#mount_devpts)
-* [`mount_home`](#mount_home)
-* [`mount_tmp`](#mount_tmp)
-* [`mount_hostfs`](#mount_hostfs)
-* [`bind_paths`](#bind_paths)
-* [`user_bind_control`](#user_bind_control)
-* [`enable_fusemount`](#enable_fusemount)
-* [`enable_overlay`](#enable_overlay)
-* [`enable_underlay`](#enable_underlay)
-* [`mount_slave`](#mount_slave)
-* [`sessiondir_max_size`](#sessiondir_max_size)
-* [`limit_container_owners`](#limit_container_owners)
-* [`limit_container_groups`](#limit_container_groups)
-* [`limit_container_paths`](#limit_container_paths)
-* [`allow_containers`](#allow_containers)
-* [`allow_net_users`](#allow_net_users)
-* [`allow_net_groups`](#allow_net_groups)
-* [`allow_net_networks`](#allow_net_networks)
-* [`always_use_nv`](#always_use_nv)
-* [`use_nvidia_container_cli`](#use_nvidia_container_cli)
-* [`always_use_rocm`](#always_use_rocm)
-* [`root_default_capabilities`](#root_default_capabilities)
-* [`memory_fs_type`](#memory_fs_type)
-* [`cni_configuration_path`](#cni_configuration_path)
-* [`cni_plugin_path`](#cni_plugin_path)
-* [`binary_path`](#binary_path)
-* [`mksquashfs_procs`](#mksquashfs_procs)
-* [`mksquashfs_mem`](#mksquashfs_mem)
-* [`shared_loop_devices`](#shared_loop_devices)
-* [`image_driver`](#image_driver)
-* [`download_concurrency`](#download_concurrency)
-* [`download_part_size`](#download_part_size)
-* [`download_buffer_size`](#download_buffer_size)
-* [`systemd_cgroups`](#systemd_cgroups)
-* [`namespace_users`](#namespace_users)
-* [`namespace_begin_id`](#namespace_begin_id)
-* [`namespace_id_range`](#namespace_id_range)
-* [`subid_template`](#subid_template)
+* [`install_method`](#-apptainer--install_method)
+* [`install_setuid`](#-apptainer--install_setuid)
+* [`version`](#-apptainer--version)
+* [`manage_repo`](#-apptainer--manage_repo)
+* [`remove_singularity`](#-apptainer--remove_singularity)
+* [`package_name`](#-apptainer--package_name)
+* [`source_dependencies`](#-apptainer--source_dependencies)
+* [`manage_go`](#-apptainer--manage_go)
+* [`rebuild_on_go`](#-apptainer--rebuild_on_go)
+* [`source_base_dir`](#-apptainer--source_base_dir)
+* [`source_mconfig_path`](#-apptainer--source_mconfig_path)
+* [`build_flags`](#-apptainer--build_flags)
+* [`build_env`](#-apptainer--build_env)
+* [`prefix`](#-apptainer--prefix)
+* [`localstatedir`](#-apptainer--localstatedir)
+* [`sysconfdir`](#-apptainer--sysconfdir)
+* [`source_exec_path`](#-apptainer--source_exec_path)
+* [`plugins`](#-apptainer--plugins)
+* [`config_path`](#-apptainer--config_path)
+* [`config_template`](#-apptainer--config_template)
+* [`allow_setuid`](#-apptainer--allow_setuid)
+* [`max_loop_devices`](#-apptainer--max_loop_devices)
+* [`allow_pid_ns`](#-apptainer--allow_pid_ns)
+* [`config_passwd`](#-apptainer--config_passwd)
+* [`config_group`](#-apptainer--config_group)
+* [`config_resolv_conf`](#-apptainer--config_resolv_conf)
+* [`mount_proc`](#-apptainer--mount_proc)
+* [`mount_sys`](#-apptainer--mount_sys)
+* [`mount_dev`](#-apptainer--mount_dev)
+* [`mount_devpts`](#-apptainer--mount_devpts)
+* [`mount_home`](#-apptainer--mount_home)
+* [`mount_tmp`](#-apptainer--mount_tmp)
+* [`mount_hostfs`](#-apptainer--mount_hostfs)
+* [`bind_paths`](#-apptainer--bind_paths)
+* [`user_bind_control`](#-apptainer--user_bind_control)
+* [`enable_fusemount`](#-apptainer--enable_fusemount)
+* [`enable_overlay`](#-apptainer--enable_overlay)
+* [`enable_underlay`](#-apptainer--enable_underlay)
+* [`mount_slave`](#-apptainer--mount_slave)
+* [`sessiondir_max_size`](#-apptainer--sessiondir_max_size)
+* [`limit_container_owners`](#-apptainer--limit_container_owners)
+* [`limit_container_groups`](#-apptainer--limit_container_groups)
+* [`limit_container_paths`](#-apptainer--limit_container_paths)
+* [`allow_containers`](#-apptainer--allow_containers)
+* [`allow_setuid_mount_encrypted`](#-apptainer--allow_setuid_mount_encrypted)
+* [`allow_setuid_mount_squashfs`](#-apptainer--allow_setuid_mount_squashfs)
+* [`allow_setuid_mount_extfs`](#-apptainer--allow_setuid_mount_extfs)
+* [`allow_net_users`](#-apptainer--allow_net_users)
+* [`allow_net_groups`](#-apptainer--allow_net_groups)
+* [`allow_net_networks`](#-apptainer--allow_net_networks)
+* [`always_use_nv`](#-apptainer--always_use_nv)
+* [`use_nvidia_container_cli`](#-apptainer--use_nvidia_container_cli)
+* [`always_use_rocm`](#-apptainer--always_use_rocm)
+* [`root_default_capabilities`](#-apptainer--root_default_capabilities)
+* [`memory_fs_type`](#-apptainer--memory_fs_type)
+* [`cni_configuration_path`](#-apptainer--cni_configuration_path)
+* [`cni_plugin_path`](#-apptainer--cni_plugin_path)
+* [`binary_path`](#-apptainer--binary_path)
+* [`mksquashfs_procs`](#-apptainer--mksquashfs_procs)
+* [`mksquashfs_mem`](#-apptainer--mksquashfs_mem)
+* [`shared_loop_devices`](#-apptainer--shared_loop_devices)
+* [`image_driver`](#-apptainer--image_driver)
+* [`download_concurrency`](#-apptainer--download_concurrency)
+* [`download_part_size`](#-apptainer--download_part_size)
+* [`download_buffer_size`](#-apptainer--download_buffer_size)
+* [`systemd_cgroups`](#-apptainer--systemd_cgroups)
+* [`apptheus_socket_path`](#-apptainer--apptheus_socket_path)
+* [`allow_monitoring`](#-apptainer--allow_monitoring)
+* [`namespace_users`](#-apptainer--namespace_users)
+* [`namespace_begin_id`](#-apptainer--namespace_begin_id)
+* [`namespace_id_range`](#-apptainer--namespace_id_range)
+* [`subid_template`](#-apptainer--subid_template)
 
-##### <a name="install_method"></a>`install_method`
+##### <a name="-apptainer--install_method"></a>`install_method`
 
 Data type: `Enum['package','source','os']`
 
@@ -119,39 +124,39 @@ Sets how Apptainer will be installed,
 
 Default value: `'package'`
 
-##### <a name="install_setuid"></a>`install_setuid`
+##### <a name="-apptainer--install_setuid"></a>`install_setuid`
 
 Data type: `Boolean`
 
 Whether to install the setuid portion of apptainer
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="version"></a>`version`
+##### <a name="-apptainer--version"></a>`version`
 
 Data type: `String`
 
 Version of Apptainer to install
 
-Default value: `'1.1.3'`
+Default value: `'1.3.3'`
 
-##### <a name="manage_repo"></a>`manage_repo`
+##### <a name="-apptainer--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
 
 Enable repositories for apptainer packages, e.g. EPEL on RedHat
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="remove_singularity"></a>`remove_singularity`
+##### <a name="-apptainer--remove_singularity"></a>`remove_singularity`
 
 Data type: `Boolean`
 
 Set whether to remove Singularity before installing Apptainer
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-apptainer--package_name"></a>`package_name`
 
 Data type: `String`
 
@@ -160,7 +165,7 @@ Only used when install_method=package
 
 Default value: `'apptainer'`
 
-##### <a name="source_dependencies"></a>`source_dependencies`
+##### <a name="-apptainer--source_dependencies"></a>`source_dependencies`
 
 Data type: `Array`
 
@@ -169,25 +174,25 @@ Only used when install_method=source
 
 Default value: `[]`
 
-##### <a name="manage_go"></a>`manage_go`
+##### <a name="-apptainer--manage_go"></a>`manage_go`
 
 Data type: `Boolean`
 
 Sets if golang module should be included
 Only used when install_method=source
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="rebuild_on_go"></a>`rebuild_on_go`
+##### <a name="-apptainer--rebuild_on_go"></a>`rebuild_on_go`
 
 Data type: `Boolean`
 
 Sets if Apptainer should be rebuilt on updates to Go via golang module
 Only used when install_method=source and manage_go=true
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="source_base_dir"></a>`source_base_dir`
+##### <a name="-apptainer--source_base_dir"></a>`source_base_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -196,7 +201,7 @@ Only used when install_method=source
 
 Default value: `'/opt'`
 
-##### <a name="source_mconfig_path"></a>`source_mconfig_path`
+##### <a name="-apptainer--source_mconfig_path"></a>`source_mconfig_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -204,7 +209,7 @@ Path to source install mconfig script
 
 Default value: `'/usr/local/sbin/apptainer-mconfig.sh'`
 
-##### <a name="build_flags"></a>`build_flags`
+##### <a name="-apptainer--build_flags"></a>`build_flags`
 
 Data type: `Hash`
 
@@ -213,7 +218,7 @@ Only used when install_method=source
 
 Default value: `{}`
 
-##### <a name="build_env"></a>`build_env`
+##### <a name="-apptainer--build_env"></a>`build_env`
 
 Data type: `Hash`
 
@@ -222,7 +227,7 @@ Only used when install_method=source
 
 Default value: `{}`
 
-##### <a name="prefix"></a>`prefix`
+##### <a name="-apptainer--prefix"></a>`prefix`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -231,7 +236,7 @@ Only used when install_method=source
 
 Default value: `'/usr'`
 
-##### <a name="localstatedir"></a>`localstatedir`
+##### <a name="-apptainer--localstatedir"></a>`localstatedir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -240,7 +245,7 @@ Only used when install_method=source
 
 Default value: `'/var'`
 
-##### <a name="sysconfdir"></a>`sysconfdir`
+##### <a name="-apptainer--sysconfdir"></a>`sysconfdir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -249,7 +254,7 @@ Only used when install_method=source
 
 Default value: `'/etc'`
 
-##### <a name="source_exec_path"></a>`source_exec_path`
+##### <a name="-apptainer--source_exec_path"></a>`source_exec_path`
 
 Data type: `String`
 
@@ -258,7 +263,7 @@ Only used when install_method=source
 
 Default value: `'/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin'`
 
-##### <a name="plugins"></a>`plugins`
+##### <a name="-apptainer--plugins"></a>`plugins`
 
 Data type: `Hash`
 
@@ -266,7 +271,7 @@ Hash to define apptainer::plugin resources
 
 Default value: `{}`
 
-##### <a name="config_path"></a>`config_path`
+##### <a name="-apptainer--config_path"></a>`config_path`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -274,7 +279,7 @@ Path to apptainer.conf
 
 Default value: `'/etc/apptainer/apptainer.conf'`
 
-##### <a name="config_template"></a>`config_template`
+##### <a name="-apptainer--config_template"></a>`config_template`
 
 Data type: `String`
 
@@ -282,7 +287,7 @@ Template used for apptainer.conf
 
 Default value: `'apptainer/apptainer.conf.erb'`
 
-##### <a name="allow_setuid"></a>`allow_setuid`
+##### <a name="-apptainer--allow_setuid"></a>`allow_setuid`
 
 Data type: `Enum['yes','no']`
 
@@ -290,7 +295,7 @@ See apptainer.conf: `allow setuid`
 
 Default value: `'yes'`
 
-##### <a name="max_loop_devices"></a>`max_loop_devices`
+##### <a name="-apptainer--max_loop_devices"></a>`max_loop_devices`
 
 Data type: `Integer`
 
@@ -298,7 +303,7 @@ See apptainer.conf: `max loop devices`
 
 Default value: `256`
 
-##### <a name="allow_pid_ns"></a>`allow_pid_ns`
+##### <a name="-apptainer--allow_pid_ns"></a>`allow_pid_ns`
 
 Data type: `Enum['yes','no']`
 
@@ -306,7 +311,7 @@ See apptainer.conf: `allow pid ns`
 
 Default value: `'yes'`
 
-##### <a name="config_passwd"></a>`config_passwd`
+##### <a name="-apptainer--config_passwd"></a>`config_passwd`
 
 Data type: `Enum['yes','no']`
 
@@ -314,7 +319,7 @@ See apptainer.conf: `config passwd`
 
 Default value: `'yes'`
 
-##### <a name="config_group"></a>`config_group`
+##### <a name="-apptainer--config_group"></a>`config_group`
 
 Data type: `Enum['yes','no']`
 
@@ -322,7 +327,7 @@ See apptainer.conf: `config group`
 
 Default value: `'yes'`
 
-##### <a name="config_resolv_conf"></a>`config_resolv_conf`
+##### <a name="-apptainer--config_resolv_conf"></a>`config_resolv_conf`
 
 Data type: `Enum['yes','no']`
 
@@ -330,7 +335,7 @@ See apptainer.conf: `config resolv conf`
 
 Default value: `'yes'`
 
-##### <a name="mount_proc"></a>`mount_proc`
+##### <a name="-apptainer--mount_proc"></a>`mount_proc`
 
 Data type: `Enum['yes','no']`
 
@@ -338,7 +343,7 @@ See apptainer.conf: `mount proc`
 
 Default value: `'yes'`
 
-##### <a name="mount_sys"></a>`mount_sys`
+##### <a name="-apptainer--mount_sys"></a>`mount_sys`
 
 Data type: `Enum['yes','no']`
 
@@ -346,7 +351,7 @@ See apptainer.conf: `mount sys`
 
 Default value: `'yes'`
 
-##### <a name="mount_dev"></a>`mount_dev`
+##### <a name="-apptainer--mount_dev"></a>`mount_dev`
 
 Data type: `Enum['yes','no']`
 
@@ -354,7 +359,7 @@ See apptainer.conf: `mount dev`
 
 Default value: `'yes'`
 
-##### <a name="mount_devpts"></a>`mount_devpts`
+##### <a name="-apptainer--mount_devpts"></a>`mount_devpts`
 
 Data type: `Enum['yes','no']`
 
@@ -362,7 +367,7 @@ See apptainer.conf: `mount devpts`
 
 Default value: `'yes'`
 
-##### <a name="mount_home"></a>`mount_home`
+##### <a name="-apptainer--mount_home"></a>`mount_home`
 
 Data type: `Enum['yes','no']`
 
@@ -370,7 +375,7 @@ See apptainer.conf: `mount home`
 
 Default value: `'yes'`
 
-##### <a name="mount_tmp"></a>`mount_tmp`
+##### <a name="-apptainer--mount_tmp"></a>`mount_tmp`
 
 Data type: `Enum['yes','no']`
 
@@ -378,7 +383,7 @@ See apptainer.conf: `mount tmp`
 
 Default value: `'yes'`
 
-##### <a name="mount_hostfs"></a>`mount_hostfs`
+##### <a name="-apptainer--mount_hostfs"></a>`mount_hostfs`
 
 Data type: `Enum['yes','no']`
 
@@ -386,7 +391,7 @@ See apptainer.conf: `mount hostfs`
 
 Default value: `'no'`
 
-##### <a name="bind_paths"></a>`bind_paths`
+##### <a name="-apptainer--bind_paths"></a>`bind_paths`
 
 Data type: `Array[Stdlib::Absolutepath]`
 
@@ -394,7 +399,7 @@ See apptainer.conf: `bind paths`
 
 Default value: `['/etc/localtime', '/etc/hosts']`
 
-##### <a name="user_bind_control"></a>`user_bind_control`
+##### <a name="-apptainer--user_bind_control"></a>`user_bind_control`
 
 Data type: `Enum['yes','no']`
 
@@ -402,7 +407,7 @@ See apptainer.conf: `user bind control`
 
 Default value: `'yes'`
 
-##### <a name="enable_fusemount"></a>`enable_fusemount`
+##### <a name="-apptainer--enable_fusemount"></a>`enable_fusemount`
 
 Data type: `Enum['yes','no']`
 
@@ -410,23 +415,23 @@ See apptainer.conf: `enable fusemount`
 
 Default value: `'yes'`
 
-##### <a name="enable_overlay"></a>`enable_overlay`
+##### <a name="-apptainer--enable_overlay"></a>`enable_overlay`
 
-Data type: `Enum['yes','no','try']`
+Data type: `Enum['yes','no','try','driver']`
 
 See apptainer.conf: `enable overlay`
 
-Default value: `'try'`
+Default value: `'yes'`
 
-##### <a name="enable_underlay"></a>`enable_underlay`
+##### <a name="-apptainer--enable_underlay"></a>`enable_underlay`
 
-Data type: `Enum['yes','no','try','driver']`
+Data type: `Enum['yes','no','preferred']`
 
 See apptainer.conf: `enable underlay`
 
 Default value: `'yes'`
 
-##### <a name="mount_slave"></a>`mount_slave`
+##### <a name="-apptainer--mount_slave"></a>`mount_slave`
 
 Data type: `Enum['yes','no']`
 
@@ -434,53 +439,81 @@ See apptainer.conf: `mount slave`
 
 Default value: `'yes'`
 
-##### <a name="sessiondir_max_size"></a>`sessiondir_max_size`
+##### <a name="-apptainer--sessiondir_max_size"></a>`sessiondir_max_size`
 
 Data type: `Integer`
 
 See apptainer.conf: `sessiondir max size`
 
-Default value: `16`
+Default value: `64`
 
-##### <a name="limit_container_owners"></a>`limit_container_owners`
+##### <a name="-apptainer--limit_container_owners"></a>`limit_container_owners`
 
 Data type: `Optional[Array]`
 
 See apptainer.conf: `limit container owners`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="limit_container_groups"></a>`limit_container_groups`
+##### <a name="-apptainer--limit_container_groups"></a>`limit_container_groups`
 
 Data type: `Optional[Array]`
 
 See apptainer.conf: `limit container groups`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="limit_container_paths"></a>`limit_container_paths`
+##### <a name="-apptainer--limit_container_paths"></a>`limit_container_paths`
 
 Data type: `Optional[Array]`
 
 See apptainer.conf: `limit container paths`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="allow_containers"></a>`allow_containers`
+##### <a name="-apptainer--allow_containers"></a>`allow_containers`
 
 Data type: `Hash[String,Enum['yes','no']]`
 
 See apptainer.conf: `allow containers`
 
-Default value: `{
+Default value:
+
+```puppet
+{
     'sif' => 'yes',
     'encrypted' => 'yes',
     'squashfs' => 'yes',
     'extfs' => 'yes',
     'dir' => 'yes',
-  }`
+  }
+```
 
-##### <a name="allow_net_users"></a>`allow_net_users`
+##### <a name="-apptainer--allow_setuid_mount_encrypted"></a>`allow_setuid_mount_encrypted`
+
+Data type: `Optional[Enum['yes','no']]`
+
+See apptainer.conf `allow setuid-mount encrypted`
+
+Default value: `undef`
+
+##### <a name="-apptainer--allow_setuid_mount_squashfs"></a>`allow_setuid_mount_squashfs`
+
+Data type: `Optional[Enum['yes','no','iflimited']]`
+
+See apptainer.conf `allow setuid-mount squashfs`
+
+Default value: `undef`
+
+##### <a name="-apptainer--allow_setuid_mount_extfs"></a>`allow_setuid_mount_extfs`
+
+Data type: `Optional[Enum['yes','no']]`
+
+See apptainer.conf `allow setuid-mount extfs`
+
+Default value: `undef`
+
+##### <a name="-apptainer--allow_net_users"></a>`allow_net_users`
 
 Data type: `Array`
 
@@ -488,7 +521,7 @@ See apptainer.conf: `allow net users`
 
 Default value: `[]`
 
-##### <a name="allow_net_groups"></a>`allow_net_groups`
+##### <a name="-apptainer--allow_net_groups"></a>`allow_net_groups`
 
 Data type: `Array`
 
@@ -496,7 +529,7 @@ See apptainer.conf: `allow net groups`
 
 Default value: `[]`
 
-##### <a name="allow_net_networks"></a>`allow_net_networks`
+##### <a name="-apptainer--allow_net_networks"></a>`allow_net_networks`
 
 Data type: `Array`
 
@@ -504,7 +537,7 @@ See apptainer.conf: `allow net networks`
 
 Default value: `[]`
 
-##### <a name="always_use_nv"></a>`always_use_nv`
+##### <a name="-apptainer--always_use_nv"></a>`always_use_nv`
 
 Data type: `Enum['yes','no']`
 
@@ -512,7 +545,7 @@ See apptainer.conf: `always use nv`
 
 Default value: `'no'`
 
-##### <a name="use_nvidia_container_cli"></a>`use_nvidia_container_cli`
+##### <a name="-apptainer--use_nvidia_container_cli"></a>`use_nvidia_container_cli`
 
 Data type: `Enum['yes','no']`
 
@@ -520,7 +553,7 @@ See apptainer.conf: `use nvidia-container-cli`
 
 Default value: `'no'`
 
-##### <a name="always_use_rocm"></a>`always_use_rocm`
+##### <a name="-apptainer--always_use_rocm"></a>`always_use_rocm`
 
 Data type: `Enum['yes','no']`
 
@@ -528,7 +561,7 @@ See apptainer.conf: `always use rocm`
 
 Default value: `'no'`
 
-##### <a name="root_default_capabilities"></a>`root_default_capabilities`
+##### <a name="-apptainer--root_default_capabilities"></a>`root_default_capabilities`
 
 Data type: `Enum['full','file','default','no']`
 
@@ -536,7 +569,7 @@ See apptainer.conf: `root default capabilities`
 
 Default value: `'full'`
 
-##### <a name="memory_fs_type"></a>`memory_fs_type`
+##### <a name="-apptainer--memory_fs_type"></a>`memory_fs_type`
 
 Data type: `Enum['tmpfs','ramfs']`
 
@@ -544,31 +577,31 @@ See apptainer.conf: `memory fs type`
 
 Default value: `'tmpfs'`
 
-##### <a name="cni_configuration_path"></a>`cni_configuration_path`
+##### <a name="-apptainer--cni_configuration_path"></a>`cni_configuration_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 See apptainer.conf: `cni configuration path`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cni_plugin_path"></a>`cni_plugin_path`
+##### <a name="-apptainer--cni_plugin_path"></a>`cni_plugin_path`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 See apptainer.conf: `cni plugin path`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="binary_path"></a>`binary_path`
+##### <a name="-apptainer--binary_path"></a>`binary_path`
 
 Data type: `Optional[String[1]]`
 
 See apptainer.conf: `binary path`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="mksquashfs_procs"></a>`mksquashfs_procs`
+##### <a name="-apptainer--mksquashfs_procs"></a>`mksquashfs_procs`
 
 Data type: `Integer[0,default]`
 
@@ -576,15 +609,15 @@ See apptainer.conf: `mksquashfs procs`
 
 Default value: `0`
 
-##### <a name="mksquashfs_mem"></a>`mksquashfs_mem`
+##### <a name="-apptainer--mksquashfs_mem"></a>`mksquashfs_mem`
 
 Data type: `Optional[String[1]]`
 
 See apptainer.conf: `mksquashfs mem`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="shared_loop_devices"></a>`shared_loop_devices`
+##### <a name="-apptainer--shared_loop_devices"></a>`shared_loop_devices`
 
 Data type: `Enum['yes','no']`
 
@@ -592,15 +625,15 @@ See apptainer.conf: `shared loop devices`
 
 Default value: `'no'`
 
-##### <a name="image_driver"></a>`image_driver`
+##### <a name="-apptainer--image_driver"></a>`image_driver`
 
 Data type: `Optional[String]`
 
 See apptainer.conf: `image driver`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="download_concurrency"></a>`download_concurrency`
+##### <a name="-apptainer--download_concurrency"></a>`download_concurrency`
 
 Data type: `Integer[0,default]`
 
@@ -608,7 +641,7 @@ See apptainer.conf: `download concurrency`
 
 Default value: `3`
 
-##### <a name="download_part_size"></a>`download_part_size`
+##### <a name="-apptainer--download_part_size"></a>`download_part_size`
 
 Data type: `Integer[0,default]`
 
@@ -616,7 +649,7 @@ See apptainer.conf: `download part size`
 
 Default value: `5242880`
 
-##### <a name="download_buffer_size"></a>`download_buffer_size`
+##### <a name="-apptainer--download_buffer_size"></a>`download_buffer_size`
 
 Data type: `Integer[0,default]`
 
@@ -624,7 +657,7 @@ See apptainer.conf: `download buffer size`
 
 Default value: `32768`
 
-##### <a name="systemd_cgroups"></a>`systemd_cgroups`
+##### <a name="-apptainer--systemd_cgroups"></a>`systemd_cgroups`
 
 Data type: `Enum['yes','no']`
 
@@ -632,7 +665,23 @@ See apptainer.conf: `systemd cgroups`
 
 Default value: `'yes'`
 
-##### <a name="namespace_users"></a>`namespace_users`
+##### <a name="-apptainer--apptheus_socket_path"></a>`apptheus_socket_path`
+
+Data type: `Stdlib::Absolutepath`
+
+See apptainer.conf `apptheus socket path`
+
+Default value: `'/run/apptheus/gateway.sock'`
+
+##### <a name="-apptainer--allow_monitoring"></a>`allow_monitoring`
+
+Data type: `Enum['yes','no']`
+
+See apptainer.conf `allow monitoring`
+
+Default value: `'no'`
+
+##### <a name="-apptainer--namespace_users"></a>`namespace_users`
 
 Data type: `Array`
 
@@ -640,7 +689,7 @@ List of uses to add to /etc/subuid and /etc/subgid to support user namespaces
 
 Default value: `[]`
 
-##### <a name="namespace_begin_id"></a>`namespace_begin_id`
+##### <a name="-apptainer--namespace_begin_id"></a>`namespace_begin_id`
 
 Data type: `Integer`
 
@@ -649,7 +698,7 @@ For each user by start + namespace_id_range + 1
 
 Default value: `65537`
 
-##### <a name="namespace_id_range"></a>`namespace_id_range`
+##### <a name="-apptainer--namespace_id_range"></a>`namespace_id_range`
 
 Data type: `Integer`
 
@@ -657,7 +706,7 @@ The range of UIDs/GIDs usable by a user in namespaces
 
 Default value: `65536`
 
-##### <a name="subid_template"></a>`subid_template`
+##### <a name="-apptainer--subid_template"></a>`subid_template`
 
 Data type: `String`
 
@@ -667,7 +716,7 @@ Default value: `'apptainer/subid.erb'`
 
 ## Defined types
 
-### <a name="apptainerplugin"></a>`apptainer::plugin`
+### <a name="apptainer--plugin"></a>`apptainer::plugin`
 
 Manage Apptainer plugin
 
@@ -686,20 +735,20 @@ apptainer::plugin { 'github.com/apptainer/apptainer/log-plugin':
 
 The following parameters are available in the `apptainer::plugin` defined type:
 
-* [`source_dir`](#source_dir)
-* [`ensure`](#ensure)
-* [`sif_name`](#sif_name)
+* [`source_dir`](#-apptainer--plugin--source_dir)
+* [`ensure`](#-apptainer--plugin--ensure)
+* [`sif_name`](#-apptainer--plugin--sif_name)
 
-##### <a name="source_dir"></a>`source_dir`
+##### <a name="-apptainer--plugin--source_dir"></a>`source_dir`
 
 Data type: `Optional[String]`
 
 The plugin source directory
 This path must be relative to Apptainer source directory `$apptainer::install::source::source_dir`
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-apptainer--plugin--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -707,7 +756,7 @@ Whether to install (present) or uninstall (absent) the plugin
 
 Default value: `'present'`
 
-##### <a name="sif_name"></a>`sif_name`
+##### <a name="-apptainer--plugin--sif_name"></a>`sif_name`
 
 Data type: `Optional[String]`
 
@@ -715,5 +764,5 @@ The name of the SIF image to use for install after the plugin is compiled.
 The default is to use part after last `/` in the plugin name so
 plugin `examples/plugins/log-plugin` will have SIF name of `log-plugin.sif`.
 
-Default value: ``undef``
+Default value: `undef`
 
