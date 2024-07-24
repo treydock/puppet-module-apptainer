@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'apptainer' do
   on_supported_os.each do |os, facts|
-    context "on #{os}" do
+    context "when #{os}" do
       let(:facts) do
         facts.merge(concat_basedir: '/dne')
       end
@@ -126,10 +126,10 @@ describe 'apptainer' do
                                   'bind path = /etc/hosts',
                                   'user bind control = yes',
                                   'enable fusemount = yes',
-                                  'enable overlay = try',
+                                  'enable overlay = yes',
                                   'enable underlay = yes',
                                   'mount slave = yes',
-                                  'sessiondir max size = 16',
+                                  'sessiondir max size = 64',
                                   'allow container sif = yes',
                                   'allow container encrypted = yes',
                                   'allow container squashfs = yes',
@@ -145,7 +145,9 @@ describe 'apptainer' do
                                   'download concurrency = 3',
                                   'download part size = 5242880',
                                   'download buffer size = 32768',
-                                  'systemd cgroups = yes'
+                                  'systemd cgroups = yes',
+                                  'apptheus socket path = /run/apptheus/gateway.sock',
+                                  'allow monitoring = no'
                                 ])
         end
 

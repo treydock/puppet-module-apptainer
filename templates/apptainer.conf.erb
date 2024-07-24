@@ -124,19 +124,30 @@ user bind control = <%= scope['apptainer::user_bind_control'] %>
 # command line option.
 enable fusemount = <%= scope['apptainer::enable_fusemount'] %>
 
-# ENABLE OVERLAY: [yes/no/try/driver]
-# DEFAULT: try
-# Enabling this option will make it possible to specify bind paths to locations
-# that do not currently exist within the container.  If 'try' is chosen,
-# overlayfs will be tried but if it is unavailable it will be silently ignored.
-# If 'driver' is chosen, overlayfs is handled by the image driver.
-enable overlay = <%= scope['apptainer::enable_overlay'] %>
-
-# ENABLE UNDERLAY: [yes/no]
+# ENABLE OVERLAY: [yes/no/driver/try]
 # DEFAULT: yes
 # Enabling this option will make it possible to specify bind paths to locations
-# that do not currently exist within the container even if overlay is not
-# working.  If overlay is available, it will be tried first.
+# that do not currently exist within the container.  If 'yes', kernel overlayfs
+# will be tried but if it doesn't work, the image driver (i.e. fuse-overlayfs)
+# will be used instead.  'try' is obsolete and treated the same as 'yes'.
+# If 'driver' is chosen, overlay will always be handled by the image driver.
+# If 'no' is chosen, then no overlay type will be used for missing bind paths
+# nor for any other purpose.
+# The ENABLE UNDERLAY 'preferred' option below overrides this option for
+# creating bind paths.
+enable overlay = <%= scope['apptainer::enable_overlay'] %>
+
+# ENABLE UNDERLAY: [yes/no/preferred]
+# DEFAULT: yes
+# Enabling this option will make it possible to specify bind paths to locations
+# that do not currently exist within the container without using any overlay
+# feature, when the '--underlay' action option is given by the user or when
+# the ENABLE OVERLAY option above is set to 'no'.
+# If 'preferred' is chosen, then underlay will always be used instead of
+# overlay for creating bind paths.
+# This option is deprecated and will be removed in a future release, because
+# the implementation is complicated and the performance is similar to
+# overlayfs and fuse-overlayfs.
 enable underlay = <%= scope['apptainer::enable_underlay'] %>
 
 # MOUNT SLAVE: [BOOL]
@@ -154,12 +165,29 @@ mount slave = <%= scope['apptainer::mount_slave'] %>
 # it will also affect users of "--writable-tmpfs".
 sessiondir max size = <%= scope['apptainer::sessiondir_max_size'] %>
 
+# *****************************************************************************
+# WARNING
+#
+# The 'limit container' and 'allow container' directives are not effective if
+# unprivileged user namespaces are enabled. They are only effectively applied
+# when Apptainer is running using the native runtime in setuid mode, and
+# unprivileged container execution is not possible on the host.
+#
+# You must disable unprivileged user namespace creation on the host if you rely
+# on the these directives to limit container execution.
+#
+# See the 'Security' and 'Configuration Files' sections of the Admin Guide for
+# more information.
+# *****************************************************************************
+
 # LIMIT CONTAINER OWNERS: [STRING]
 # DEFAULT: NULL
 # Only allow containers to be used that are owned by a given user. If this
 # configuration is undefined (commented or set to NULL), all containers are
-# allowed to be used. This feature only applies when Apptainer is running in
-# SUID mode and the user is non-root.
+# allowed to be used. 
+#
+# Only effective in setuid mode, with unprivileged user namespace creation
+# disabled.  Ignored for the root user.
 #limit container owners = gmk, apptainer, nobody
 <%- if scope['apptainer::limit_container_owners'] -%>
 limit container owners = <%= scope['apptainer::limit_container_owners'].join(', ') %>
@@ -170,8 +198,10 @@ limit container owners = <%= scope['apptainer::limit_container_owners'].join(', 
 # DEFAULT: NULL
 # Only allow containers to be used that are owned by a given group. If this
 # configuration is undefined (commented or set to NULL), all containers are
-# allowed to be used. This feature only applies when Apptainer is running in
-# SUID mode and the user is non-root.
+# allowed to be used.
+#
+# Only effective in setuid mode, with unprivileged user namespace creation
+# disabled.  Ignored for the root user.
 #limit container groups = group1, apptainer, nobody
 <%- if scope['apptainer::limit_container_groups'] -%>
 limit container groups = <%= scope['apptainer::limit_container_groups'].join(', ') %>
@@ -182,9 +212,10 @@ limit container groups = <%= scope['apptainer::limit_container_groups'].join(', 
 # DEFAULT: NULL
 # Only allow containers to be used that are located within an allowed path
 # prefix. If this configuration is undefined (commented or set to NULL),
-# containers will be allowed to run from anywhere on the file system. This
-# feature only applies when Apptainer is running in SUID mode and the user is
-# non-root.
+# containers will be allowed to run from anywhere on the file system.
+#
+# Only effective in setuid mode, with unprivileged user namespace creation
+# disabled.  Ignored for the root user.
 #limit container paths = /scratch, /tmp, /global
 <%- if scope['apptainer::limit_container_paths'] -%>
 limit container paths = <%= scope['apptainer::limit_container_paths'].join(', ') %>
@@ -194,10 +225,72 @@ limit container paths = <%= scope['apptainer::limit_container_paths'].join(', ')
 # ALLOW CONTAINER ${TYPE}: [BOOL]
 # DEFAULT: yes
 # This feature limits what kind of containers that Apptainer will allow
-# users to use (note this does not apply for root).
+# users to use.
+#
+# Only effective in setuid mode, with unprivileged user namespace creation
+# disabled.  Ignored for the root user. Note that some of the
+# same operations can be limited in setuid mode by the ALLOW SETUID-MOUNT
+# feature below; both types need to be "yes" to be allowed.
 #
 <%- scope['apptainer::allow_containers'].each_pair do |type, value| -%>
 allow container <%= type %> = <%= value %>
+<%- end -%>
+
+# ALLOW SETUID-MOUNT ${TYPE}: [see specific types below]
+# This feature limits what types of kernel mounts that Apptainer will
+# allow unprivileged users to use in setuid mode.  Note that some of
+# the same operations can also be limited by the ALLOW CONTAINER feature
+# above; both types need to be "yes" to be allowed.  Ignored for the root
+# user.
+#
+# ALLOW SETUID-MOUNT ENCRYPTED: [BOOL}
+# DEFAULT: yes
+# Allow mounting of SIF encryption using the kernel device-mapper in
+# setuid mode.  If set to "no", gocryptfs (FUSE-based) encryption will be
+# used instead, which uses a different format in the SIF file, the same
+# format used in unprivileged user namespace mode.
+# allow setuid-mount encrypted = yes
+<%- if scope['apptainer::allow_setuid_mount_encrypted'] -%>
+allow setuid-mount encrypted = <%= scope['apptainer::allow_setuid_mount_encrypted'] %>
+<%- end -%>
+
+#
+# ALLOW SETUID-MOUNT SQUASHFS: [yes/no/iflimited]
+# DEFAULT: iflimited
+# Allow mounting of squashfs filesystem types by the kernel in setuid mode,
+# both inside and outside of SIF files.  If set to "no", a FUSE-based
+# alternative will be used, the same one used in unprivileged user namespace
+# mode.  If set to "iflimited" (the default), then if either a LIMIT CONTAINER
+# option is used above or the Execution Control List (ECL) feature is activated
+# in ecl.toml, this setting will be treated as "yes", and otherwise it will be
+# treated as "no". 
+# WARNING: in setuid mode a "yes" here while still allowing users write
+# access to the underlying filesystem data enables potential attacks on
+# the kernel.  On the other hand, a "no" here while attempting to limit
+# users to running only approved containers enables the users to potentially
+# override those limits using ptrace() functionality since the FUSE processes
+# run under the user's own uid.  So leaving this on the default setting is
+# advised.
+# allow setuid-mount squashfs = iflimited
+<%- if scope['apptainer::allow_setuid_mount_squashfs'] -%>
+allow setuid-mount squashfs = <%= scope['apptainer::allow_setuid_mount_squashfs'] %>
+<%- end -%>
+
+#
+# ALLOW SETUID-MOUNT EXTFS: [BOOL]
+# DEFAULT: no
+# Allow mounting of extfs filesystem types by the kernel in setuid mode, both
+# inside and outside of SIF files.  If set to "no", a FUSE-based alternative
+# will be used, the same one used in unprivileged user namespace mode.
+# WARNING: this filesystem type frequently has relevant kernel CVEs that take
+# a long time for vendors to patch because they are not considered to be High
+# severity since normally unprivileged users do not have write access to the
+# raw filesystem data.  That leaves the kernel vulnerable to attack when
+# this option is enabled in setuid mode. That is why this option defaults to
+# "no".  Change it at your own risk.
+# allow setuid-mount extfs = no
+<%- if scope['apptainer::allow_setuid_mount_extfs'] -%>
+allow setuid-mount extfs = <%= scope['apptainer::allow_setuid_mount_extfs'] %>
 <%- end -%>
 
 # ALLOW NET USERS: [STRING]
@@ -318,7 +411,7 @@ mksquashfs procs = <%= scope['apptainer::mksquashfs_procs'] %>
 # This allows the administrator to set the maximum amount of memory for mkswapfs
 # to use when building an image.  e.g. 1G for 1gb or 500M for 500mb. Restricting memory
 # can have a major impact on the time it takes mksquashfs to create the image.
-# NOTE: This fuctionality did not exist in squashfs-tools prior to version 4.3
+# NOTE: This functionality did not exist in squashfs-tools prior to version 4.3
 # If using an earlier version you should not set this.
 # mksquashfs mem = 1G
 <%- if scope['apptainer::mksquashfs_mem'] -%>
@@ -367,3 +460,14 @@ download buffer size = <%= scope['apptainer::download_buffer_size'] %>
 # Whether to use systemd to manage container cgroups. Required for rootless cgroups
 # functionality. 'no' will manage cgroups directly via cgroupfs.
 systemd cgroups = <%= scope['apptainer::systemd_cgroups'] %>
+
+# APPTHEUS SOCKET PATH: [STRING]
+# DEFAULT: /run/apptheus/gateway.sock
+# Defines apptheus socket path
+apptheus socket path = <%= scope['apptainer::apptheus_socket_path'] %>
+
+# ALLOW MONITORING: [BOOL]
+# DEFAULT: no
+# Allow to monitor the system resource usage of apptainer. To enable this option
+# additional tool, i.e. apptheus, is required.
+allow monitoring = <%= scope['apptainer::allow_monitoring'] %>

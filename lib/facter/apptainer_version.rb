@@ -9,7 +9,7 @@ Facter.add(:apptainer_version) do
     version = nil
     if Facter::Util::Resolution.which('apptainer')
       version = Facter::Util::Resolution.exec('apptainer version')
-      version&.strip!
+      version = version.strip unless version.nil?
     end
     version
   end

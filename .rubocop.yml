@@ -65,6 +65,11 @@ Style/SymbolArray:
   EnforcedStyle: brackets
 RSpec/ImplicitSubject:
   Enabled: false
+Lint/BooleanSymbol:
+  Enabled: false
+Naming/MethodParameterName:
+  AllowedNames:
+  - is
 RSpec/MessageSpies:
   EnforcedStyle: receive
 Style/Documentation:

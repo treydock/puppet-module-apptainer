@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'apptainer::plugin' do
   on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
+    context "when #{os}" do
       let(:facts) do
         os_facts
       end
@@ -13,7 +13,7 @@ describe 'apptainer::plugin' do
         'example.com/log-plugin'
       end
 
-      let(:version) { '1.1.3' }
+      let(:version) { '1.3.3' }
 
       let :params do
         { source_dir: 'examples/plugins/log-plugin' }
