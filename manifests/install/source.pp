@@ -11,7 +11,7 @@ class apptainer::install::source {
       Class['golang'] -> Exec['apptainer-mconfig']
     }
   }
-  ensure_packages($apptainer::source_dependencies)
+  stdlib::ensure_packages($apptainer::source_dependencies)
   $apptainer::source_dependencies.each |$package| {
     Package[$package] -> Exec['apptainer-mconfig']
   }
