@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v4.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v4.0.0) (2024-10-22)
+
+[Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v3.0.0...v4.0.0)
+
+### Changed
+
+- Require stdlib 9.x [\#10](https://github.com/treydock/puppet-module-apptainer/pull/10) ([treydock](https://github.com/treydock))
+
 ## [v3.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v3.0.0) (2024-07-24)
 
 [Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v2.0.0...v3.0.0)
