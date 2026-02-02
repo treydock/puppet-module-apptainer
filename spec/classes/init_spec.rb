@@ -111,7 +111,10 @@ describe 'apptainer' do
           verify_exact_contents(catalogue, 'apptainer.conf', [
                                   'allow setuid = yes',
                                   'max loop devices = 256',
+                                  'allow ipc ns = yes',
                                   'allow pid ns = yes',
+                                  'allow user ns = yes',
+                                  'allow uts ns = yes',
                                   'config passwd = yes',
                                   'config group = yes',
                                   'config resolv_conf = yes',
