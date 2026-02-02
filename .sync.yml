@@ -2,11 +2,9 @@
 .github/workflows/ci.yaml:
   acceptance_matrix:
     set:
-      - ---el7
       - el8
       - el9
       - debian-11
-      - ubuntu-2004
       - ubuntu-2204
 .gitlab-ci.yml:
   delete: true
@@ -14,5 +12,9 @@ appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
   delete: true
+spec/acceptance/nodesets/el10.yml:
+  delete: true
 spec/acceptance/nodesets/debian-12.yml:
+  delete: true
+spec/acceptance/nodesets/ubuntu-2404.yml:
   delete: true

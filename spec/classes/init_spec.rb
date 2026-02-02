@@ -22,7 +22,7 @@ describe 'apptainer' do
         context 'with install_setuid => true' do
           let(:params) do
             {
-              install_setuid: true
+              install_setuid: true,
             }
           end
 
@@ -34,7 +34,7 @@ describe 'apptainer' do
         let(:params) do
           {
             'install_method' => 'os',
-            'version' => '3.14'
+            'version' => '3.14',
           }
         end
 
@@ -60,21 +60,21 @@ describe 'apptainer' do
 
         it do
           verify_contents(catalogue, 'apptainer-mconfig', [
-                            './mconfig --prefix=/usr --localstatedir=/var --sysconfdir=/etc'
-                          ])
+                            './mconfig --prefix=/usr --localstatedir=/var --sysconfdir=/etc',
+                          ],)
         end
 
         context 'with install_setuid => true' do
           let(:params) do
             {
-              install_setuid: true
+              install_setuid: true,
             }
           end
 
           it do
             verify_contents(catalogue, 'apptainer-mconfig', [
-                              './mconfig --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-suid'
-                            ])
+                              './mconfig --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-suid',
+                            ],)
           end
         end
 
@@ -83,15 +83,15 @@ describe 'apptainer' do
             {
               build_flags: {
                 'without-suid' => true,
-                'prefix' => '/opt/apptainer'
-              }
+                'prefix' => '/opt/apptainer',
+              },
             }
           end
 
           it do
             verify_contents(catalogue, 'apptainer-mconfig', [
-                              './mconfig --prefix=/opt/apptainer --localstatedir=/var --sysconfdir=/etc --without-suid'
-                            ])
+                              './mconfig --prefix=/opt/apptainer --localstatedir=/var --sysconfdir=/etc --without-suid',
+                            ],)
           end
         end
       end
@@ -104,7 +104,7 @@ describe 'apptainer' do
                                                              path: '/etc/apptainer/apptainer.conf',
                                                              owner: 'root',
                                                              group: 'root',
-                                                             mode: '0644')
+                                                             mode: '0644',)
         end
 
         it 'has default apptainer.conf contents' do
@@ -147,8 +147,8 @@ describe 'apptainer' do
                                   'download buffer size = 32768',
                                   'systemd cgroups = yes',
                                   'apptheus socket path = /run/apptheus/gateway.sock',
-                                  'allow monitoring = no'
-                                ])
+                                  'allow monitoring = no',
+                                ],)
         end
 
         it { is_expected.not_to contain_file('/etc/subuid') }
@@ -157,7 +157,7 @@ describe 'apptainer' do
         context 'with namespace_users defined' do
           let(:params) do
             {
-              namespace_users: ['foo', 'bar']
+              namespace_users: ['foo', 'bar'],
             }
           end
 
@@ -165,28 +165,28 @@ describe 'apptainer' do
             is_expected.to contain_file('/etc/subuid').with(ensure: 'file',
                                                             owner: 'root',
                                                             group: 'root',
-                                                            mode: '0644')
+                                                            mode: '0644',)
           end
 
           it 'has /etc/setuid contents' do
             verify_exact_contents(catalogue, '/etc/subuid', [
                                     'foo:65537:65536',
-                                    'bar:131074:65536'
-                                  ])
+                                    'bar:131074:65536',
+                                  ],)
           end
 
           it do
             is_expected.to contain_file('/etc/subgid').with(ensure: 'file',
                                                             owner: 'root',
                                                             group: 'root',
-                                                            mode: '0644')
+                                                            mode: '0644',)
           end
 
           it 'has /etc/setgid contents' do
             verify_exact_contents(catalogue, '/etc/subgid', [
                                     'foo:65537:65536',
-                                    'bar:131074:65536'
-                                  ])
+                                    'bar:131074:65536',
+                                  ],)
           end
         end
       end
