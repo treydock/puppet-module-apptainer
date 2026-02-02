@@ -73,7 +73,7 @@ describe 'apptainer::plugin' do
           unless: "apptainer plugin list | grep 'example.com/log-plugin' | grep yes",
           require: [
             'Exec[apptainer-plugin-install-example.com/log-plugin]',
-            'Exec[apptainer-plugin-reinstall-example.com/log-plugin]'
+            'Exec[apptainer-plugin-reinstall-example.com/log-plugin]',
           ],
         )
       end
