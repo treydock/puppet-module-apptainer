@@ -160,7 +160,7 @@ describe 'apptainer class:' do
     it 'runs successfully' do
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.19.2',
+        version => '1.24.12',
       }
       class { 'apptainer':
         version         => '#{version}',
@@ -201,7 +201,7 @@ describe 'apptainer class:' do
     it 'runs successfully' do
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.19.2',
+        version => '1.24.12',
       }
       class { 'apptainer':
         version         => '#{version}',
