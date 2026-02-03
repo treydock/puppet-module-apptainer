@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v5.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v5.0.0) (2026-02-03)
+
+[Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v4.0.0...v5.0.0)
+
+### Changed
+
+- Update default version to 1.4.5 [\#13](https://github.com/treydock/puppet-module-apptainer/pull/13) ([treydock](https://github.com/treydock))
+- Major updates - read description [\#12](https://github.com/treydock/puppet-module-apptainer/pull/12) ([treydock](https://github.com/treydock))
+
 ## [v4.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v4.0.0) (2024-10-22)
 
 [Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v3.0.0...v4.0.0)

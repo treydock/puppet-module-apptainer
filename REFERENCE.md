@@ -62,7 +62,10 @@ The following parameters are available in the `apptainer` class:
 * [`config_template`](#-apptainer--config_template)
 * [`allow_setuid`](#-apptainer--allow_setuid)
 * [`max_loop_devices`](#-apptainer--max_loop_devices)
+* [`allow_ipc_ns`](#-apptainer--allow_ipc_ns)
 * [`allow_pid_ns`](#-apptainer--allow_pid_ns)
+* [`allow_user_ns`](#-apptainer--allow_user_ns)
+* [`allow_uts_ns`](#-apptainer--allow_uts_ns)
 * [`config_passwd`](#-apptainer--config_passwd)
 * [`config_group`](#-apptainer--config_group)
 * [`config_resolv_conf`](#-apptainer--config_resolv_conf)
@@ -90,6 +93,7 @@ The following parameters are available in the `apptainer` class:
 * [`allow_net_users`](#-apptainer--allow_net_users)
 * [`allow_net_groups`](#-apptainer--allow_net_groups)
 * [`allow_net_networks`](#-apptainer--allow_net_networks)
+* [`allow_netns_paths`](#-apptainer--allow_netns_paths)
 * [`always_use_nv`](#-apptainer--always_use_nv)
 * [`use_nvidia_container_cli`](#-apptainer--use_nvidia_container_cli)
 * [`always_use_rocm`](#-apptainer--always_use_rocm)
@@ -138,7 +142,7 @@ Data type: `String`
 
 Version of Apptainer to install
 
-Default value: `'1.3.3'`
+Default value: `'1.4.5'`
 
 ##### <a name="-apptainer--manage_repo"></a>`manage_repo`
 
@@ -303,11 +307,35 @@ See apptainer.conf: `max loop devices`
 
 Default value: `256`
 
+##### <a name="-apptainer--allow_ipc_ns"></a>`allow_ipc_ns`
+
+Data type: `Enum['yes','no']`
+
+See apptainer.conf: `allow ipc ns`
+
+Default value: `'yes'`
+
 ##### <a name="-apptainer--allow_pid_ns"></a>`allow_pid_ns`
 
 Data type: `Enum['yes','no']`
 
 See apptainer.conf: `allow pid ns`
+
+Default value: `'yes'`
+
+##### <a name="-apptainer--allow_user_ns"></a>`allow_user_ns`
+
+Data type: `Enum['yes','no']`
+
+See apptainer.conf: `allow user ns`
+
+Default value: `'yes'`
+
+##### <a name="-apptainer--allow_uts_ns"></a>`allow_uts_ns`
+
+Data type: `Enum['yes','no']`
+
+See apptainer.conf: `allow uts ns`
 
 Default value: `'yes'`
 
@@ -534,6 +562,14 @@ Default value: `[]`
 Data type: `Array`
 
 See apptainer.conf: `allow net networks`
+
+Default value: `[]`
+
+##### <a name="-apptainer--allow_netns_paths"></a>`allow_netns_paths`
+
+Data type: `Array`
+
+See apptainer.conf: `allow netns paths`
 
 Default value: `[]`
 
