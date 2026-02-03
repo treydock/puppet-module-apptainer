@@ -13,9 +13,7 @@
 
 This module manages the apptainer installation and configuration of apptainer.conf.
 
-RedHat and Debian (except Debian 10) based systems will by default install from apptainer package
-
-Debian 10 will by default install from source
+RedHat and Debian based systems will by default install from an apptainer package
 
 ## Usage
 
@@ -31,14 +29,14 @@ For both package and source installs, it's best to define the desired version.
 This Puppet module supports both upgrades and downgrades of Apptainer.
 
 ```yaml
-apptainer::version: '1.0.1'
+apptainer::version: '1.4.4'
 ```
 
 The following Hiera example of building from source (default for Debian 10) with several additional options passed.
 
 ```yaml
-golang::version: '1.19.2'
-apptainer::version: '1.0.1'
+golang::version: '1.24.12'
+apptainer::version: '1.4.4'
 apptainer::install_method: source
 apptainer::build_flags:
   without-suid: true

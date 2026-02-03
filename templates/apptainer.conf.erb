@@ -7,7 +7,7 @@
 # DEFAULT: yes
 # Should we allow users to utilize the setuid program flow within Apptainer?
 # note1: This is the default mode, and to utilize all features, this option
-# must be enabled.  For example, without this option loop mounts of image 
+# must be enabled.  For example, without this option loop mounts of image
 # files will not work; only sandbox image directories, which do not need loop
 # mounts, will work (subject to note 2).
 # note2: If this option is disabled, it will rely on unprivileged user
@@ -21,6 +21,11 @@ allow setuid = <%= scope['apptainer::allow_setuid'] %>
 # to utilize.
 max loop devices = <%= scope['apptainer::max_loop_devices'] %>
 
+# ALLOW IPC NS: [BOOL]
+# DEFAULT: yes
+# Should we allow users to request the IPC namespace?
+allow ipc ns = <%= scope['apptainer::allow_ipc_ns'] %>
+
 # ALLOW PID NS: [BOOL]
 # DEFAULT: yes
 # Should we allow users to request the PID namespace? Note that for some HPC
@@ -28,6 +33,16 @@ max loop devices = <%= scope['apptainer::max_loop_devices'] %>
 # some MPI implementations utilize shared memory. (note, on some older
 # systems, the PID namespace is always used)
 allow pid ns = <%= scope['apptainer::allow_pid_ns'] %>
+
+# ALLOW USER NS: [BOOL]
+# DEFAULT: yes
+# Should we allow users to request the USER namespace?
+allow user ns = <%= scope['apptainer::allow_user_ns'] %>
+
+# ALLOW UTS NS: [BOOL]
+# DEFAULT: yes
+# Should we allow users to request the UTS namespace?
+allow uts ns = <%= scope['apptainer::allow_uts_ns'] %>
 
 # CONFIG PASSWD: [BOOL]
 # DEFAULT: yes
@@ -158,7 +173,7 @@ enable underlay = <%= scope['apptainer::enable_underlay'] %>
 mount slave = <%= scope['apptainer::mount_slave'] %>
 
 # SESSIONDIR MAXSIZE: [STRING]
-# DEFAULT: 16
+# DEFAULT: 64
 # This specifies how large the default sessiondir should be (in MB). It will
 # affect users who use the "--contain" options and don't also specify a
 # location to do default read/writes to (e.g. "--workdir" or "--home") and
@@ -184,7 +199,7 @@ sessiondir max size = <%= scope['apptainer::sessiondir_max_size'] %>
 # DEFAULT: NULL
 # Only allow containers to be used that are owned by a given user. If this
 # configuration is undefined (commented or set to NULL), all containers are
-# allowed to be used. 
+# allowed to be used.
 #
 # Only effective in setuid mode, with unprivileged user namespace creation
 # disabled.  Ignored for the root user.
@@ -263,7 +278,7 @@ allow setuid-mount encrypted = <%= scope['apptainer::allow_setuid_mount_encrypte
 # mode.  If set to "iflimited" (the default), then if either a LIMIT CONTAINER
 # option is used above or the Execution Control List (ECL) feature is activated
 # in ecl.toml, this setting will be treated as "yes", and otherwise it will be
-# treated as "no". 
+# treated as "no".
 # WARNING: in setuid mode a "yes" here while still allowing users write
 # access to the underlying filesystem data enables potential attacks on
 # the kernel.  On the other hand, a "no" here while attempting to limit
@@ -295,11 +310,13 @@ allow setuid-mount extfs = <%= scope['apptainer::allow_setuid_mount_extfs'] %>
 
 # ALLOW NET USERS: [STRING]
 # DEFAULT: NULL
-# Allow specified root administered CNI network configurations to be used by the
-# specified list of users. By default only root may use CNI configuration,
-# except in the case of a fakeroot execution where only 40_fakeroot.conflist
-# is used. This feature only applies when Apptainer is running in
-# SUID mode and the user is non-root.
+# A list of non-root users that are permitted to use the CNI configurations
+# specified in the 'allow net networks' directive, and can join existing
+# network namespaces listed in the 'allow netns paths' directive.
+# By default only root may use CNI configurations, or join existing network
+# namespaces, except in the case of a fakeroot execution where only the
+# 40_fakeroot.conflist CNI configuration is used. The restriction only applies
+# when Apptainer is running in SUID mode and the user is non-root.
 #allow net users = gmk, apptainer
 <%- unless scope['apptainer::allow_net_users'].empty? -%>
 allow net users = <%= scope['apptainer::allow_net_users'].join(', ') %>
@@ -308,11 +325,13 @@ allow net users = <%= scope['apptainer::allow_net_users'].join(', ') %>
 
 # ALLOW NET GROUPS: [STRING]
 # DEFAULT: NULL
-# Allow specified root administered CNI network configurations to be used by the
-# specified list of users. By default only root may use CNI configuration,
-# except in the case of a fakeroot execution where only 40_fakeroot.conflist
-# is used. This feature only applies when Apptainer is running in
-# SUID mode and the user is non-root.
+# A list of non-root groups that are permitted to use the CNI configurations
+# specified in the 'allow net networks' directive, and can join existing
+# network namespaces listed in the 'allow netns paths' directive.
+# By default only root may use CNI configurations, or join existing network
+# namespaces, except in the case of a fakeroot execution where only the
+# 40_fakeroot.conflist CNI configuration is used. The restriction only applies
+# when Apptainer is running in SUID mode and the user is non-root.
 #allow net groups = group1, apptainer
 <%- unless scope['apptainer::allow_net_groups'].empty? -%>
 allow net groups = <%= scope['apptainer::allow_net_groups'].join(', ') %>
@@ -322,7 +341,7 @@ allow net groups = <%= scope['apptainer::allow_net_groups'].join(', ') %>
 # ALLOW NET NETWORKS: [STRING]
 # DEFAULT: NULL
 # Specify the names of CNI network configurations that may be used by users and
-# groups listed in the allow net users / allow net groups directives. Thus feature
+# groups listed in the allow net users / allow net groups directives. This restriction
 # only applies when Apptainer is running in SUID mode and the user is non-root.
 #allow net networks = bridge
 <%- unless scope['apptainer::allow_net_networks'].empty? -%>
@@ -330,11 +349,22 @@ allow net networks = <%= scope['apptainer::allow_net_networks'].join(', ') %>
 <%- end -%>
 
 
+# ALLOW NETNS PATHS: [STRING]
+# DEFAULT: NULL
+# Specify the paths to network namespaces that may be joined by users and groups
+# listed in the allow net users / allow net groups directives. This restriction
+# only applies when Apptainer is running in SUID mode and the user is non-root.
+#allow netns paths = /var/run/netns/my_network
+<%- unless scope['apptainer::allow_netns_paths'].empty? -%>
+allow netns paths = <%= scope['apptainer::allow_netns_paths'].join(', ') %>
+<%- end -%>
+
+
 # ALWAYS USE NV ${TYPE}: [BOOL]
 # DEFAULT: no
 # This feature allows an administrator to determine that every action command
-# should be executed implicitly with the --nv option (useful for GPU only 
-# environments). 
+# should be executed implicitly with the --nv option (useful for GPU only
+# environments).
 always use nv = <%= scope['apptainer::always_use_nv'] %>
 
 # USE NVIDIA-NVIDIA-CONTAINER-CLI ${TYPE}: [BOOL]
@@ -356,7 +386,8 @@ always use rocm = <%= scope['apptainer::always_use_rocm'] %>
 # DEFAULT: full
 # Define default root capability set kept during runtime
 # - full: keep all capabilities (same as --keep-privs)
-# - file: keep capabilities configured in ${prefix}/etc/apptainer/capabilities/user.root
+# - file: keep capabilities configured for root in
+#         ${prefix}/etc/apptainer/capability.json
 # - no: no capabilities (same as --no-privs)
 root default capabilities = <%= scope['apptainer::root_default_capabilities'] %>
 
@@ -400,7 +431,7 @@ binary path = <%= scope['apptainer::binary_path'] %>
 
 # MKSQUASHFS PROCS: [UINT]
 # DEFAULT: 0 (All CPUs)
-# This allows the administrator to specify the number of CPUs for mksquashfs 
+# This allows the administrator to specify the number of CPUs for mksquashfs
 # to use when building an image.  The fewer processors the longer it takes.
 # To enable it to use all available CPU's set this to 0.
 # mksquashfs procs = 0
@@ -428,9 +459,11 @@ shared loop devices = <%= scope['apptainer::shared_loop_devices'] %>
 # IMAGE DRIVER: [STRING]
 # DEFAULT: Undefined
 # This option specifies the name of an image driver provided by a plugin that
-# will be used to handle image mounts. If the 'enable overlay' option is set
-# to 'driver' the driver name specified here will also be used to handle
-# overlay mounts.
+# will be used to handle image mounts. This will override the builtin image
+# driver which provides unprivileged image mounts for squashfs, extfs,
+# overlayfs, and gocryptfs.  The overlayfs image driver will only be used
+# if the kernel overlayfs is not usable, but if the 'enable overlay' option
+# above is set to 'driver', the image driver will always be used for overlay.
 # If the driver name specified has not been registered via a plugin installation
 # the run-time will abort.
 <%- if scope['apptainer::image_driver'] -%>

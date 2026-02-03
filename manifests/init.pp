@@ -61,8 +61,14 @@
 #   See apptainer.conf: `allow setuid`
 # @param max_loop_devices
 #   See apptainer.conf: `max loop devices`
+# @param allow_ipc_ns
+#   See apptainer.conf: `allow ipc ns`
 # @param allow_pid_ns
 #   See apptainer.conf: `allow pid ns`
+# @param allow_user_ns
+#   See apptainer.conf: `allow user ns`
+# @param allow_uts_ns
+#   See apptainer.conf: `allow uts ns`
 # @param config_passwd
 #   See apptainer.conf: `config passwd`
 # @param config_group
@@ -117,6 +123,8 @@
 #   See apptainer.conf: `allow net groups`
 # @param allow_net_networks
 #   See apptainer.conf: `allow net networks`
+# @param allow_netns_paths
+#   See apptainer.conf: `allow netns paths`
 # @param always_use_nv
 #   See apptainer.conf: `always use nv`
 # @param use_nvidia_container_cli
@@ -166,7 +174,7 @@
 class apptainer (
   Enum['package','source','os'] $install_method = 'package',
   Boolean $install_setuid = false,
-  String $version = '1.3.3',
+  String $version = '1.4.5',
   Boolean $manage_repo = true,
   Boolean $remove_singularity = false,
   # Package install
@@ -189,7 +197,10 @@ class apptainer (
   String $config_template = 'apptainer/apptainer.conf.erb',
   Enum['yes','no'] $allow_setuid  = 'yes',
   Integer $max_loop_devices = 256,
+  Enum['yes','no'] $allow_ipc_ns = 'yes',
   Enum['yes','no'] $allow_pid_ns = 'yes',
+  Enum['yes','no'] $allow_user_ns = 'yes',
+  Enum['yes','no'] $allow_uts_ns = 'yes',
   Enum['yes','no'] $config_passwd = 'yes',
   Enum['yes','no'] $config_group = 'yes',
   Enum['yes','no'] $config_resolv_conf = 'yes',
@@ -223,6 +234,7 @@ class apptainer (
   Array $allow_net_users = [],
   Array $allow_net_groups = [],
   Array $allow_net_networks = [],
+  Array $allow_netns_paths = [],
   Enum['yes','no'] $always_use_nv = 'no',
   Enum['yes','no'] $use_nvidia_container_cli = 'no',
   Enum['yes','no'] $always_use_rocm = 'no',
