@@ -8,6 +8,10 @@ class apptainer::singularity {
     file { '/bin/singularity': ensure => 'absent' }
   }
 
+  if $apptainer::install_method == 'os' and ! $facts['apptainer_version'] {
+    package { $appatainer::singularity_package: ensure => 'absent' }
+  }
+
   file { '/etc/singularity':
     ensure  => 'absent',
     purge   => true,
