@@ -9,7 +9,7 @@ class apptainer::singularity {
   }
 
   if $apptainer::install_method == 'os' and ! $facts['apptainer_version'] {
-    package { $appatainer::singularity_package: ensure => 'absent' }
+    package { $apptainer::singularity_package: ensure => 'absent' }
   }
 
   file { '/etc/singularity':
