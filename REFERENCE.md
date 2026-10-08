@@ -116,6 +116,7 @@ The following parameters are available in the `apptainer` class:
 * [`namespace_begin_id`](#-apptainer--namespace_begin_id)
 * [`namespace_id_range`](#-apptainer--namespace_id_range)
 * [`subid_template`](#-apptainer--subid_template)
+* [`singularity_package`](#-apptainer--singularity_package)
 
 ##### <a name="-apptainer--install_method"></a>`install_method`
 
@@ -749,6 +750,14 @@ Data type: `String`
 The template to use for /etc/subuid and /etc/subgid
 
 Default value: `'apptainer/subid.erb'`
+
+##### <a name="-apptainer--singularity_package"></a>`singularity_package`
+
+Data type: `String`
+
+Singularity package to be removed
+
+Default value: `singularity`
 
 ## Defined types
 

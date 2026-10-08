@@ -170,6 +170,8 @@
 #   The range of UIDs/GIDs usable by a user in namespaces
 # @param subid_template
 #   The template to use for /etc/subuid and /etc/subgid
+# @param singularity_package
+#   Sets the name of the singularity package to be removed
 #
 class apptainer (
   Enum['package','source','os'] $install_method = 'package',
@@ -257,6 +259,7 @@ class apptainer (
   Integer $namespace_begin_id = 65537,
   Integer $namespace_id_range = 65536,
   String $subid_template = 'apptainer/subid.erb',
+  String $singularity_package = 'singularity',
 ) {
   if $facts['os']['family'] == 'RedHat' and $manage_repo {
     include epel
