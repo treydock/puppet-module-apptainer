@@ -2,7 +2,7 @@
 
 RSpec.configure do |c|
   c.before :suite do
-    on hosts, puppet('module', 'install', 'puppet-rsyslog', '--version', '7.1.0')
+    install_puppet_module_via_pmt_on(hosts, 'puppet-rsyslog', '7.1.0')
   end
 end
 
