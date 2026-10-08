@@ -35,10 +35,10 @@ class apptainer::install::package {
     } else {
       $source_suffix = '_amd64.deb'
     }
-    $source = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}${source_suffix}.deb"
-    $source_path = "/usr/local/src/apptainer_${apptainer::version}${source_suffix}.deb"
-    $source_suid = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}${source_suffix}.deb"
-    $source_suid_path = "/usr/local/src/apptainer-suid_${apptainer::version}${source_suffix}.deb"
+    $source = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}${source_suffix}"
+    $source_path = "/usr/local/src/apptainer_${apptainer::version}${source_suffix}"
+    $source_suid = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}${source_suffix}"
+    $source_suid_path = "/usr/local/src/apptainer-suid_${apptainer::version}${source_suffix}"
     archive { $source_path:
       source  => $source,
       extract => false,
