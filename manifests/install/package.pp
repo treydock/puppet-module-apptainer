@@ -53,7 +53,7 @@ class apptainer::install::package {
     }
     exec { 'install-apptainer':
       path        => '/usr/bin:/bin:/usr/sbin:/sbin',
-      command     => "apt install --force-yes -y ${source_path}",
+      command     => "apt install --allow -y -o Dpkg::Options::=\"--force-confnew\" ${source_path}",
       environment => [
         'DEBIAN_FRONTEND=noninteractive',
       ],
