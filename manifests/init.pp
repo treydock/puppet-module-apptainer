@@ -139,6 +139,8 @@
 #   See apptainer.conf: `cni configuration path`
 # @param cni_plugin_path
 #   See apptainer.conf: `cni plugin path`
+# @param cdi_dirs
+#   See apptainer.conf: `cdi dirs`
 # @param binary_path
 #   See apptainer.conf: `binary path`
 # @param mksquashfs_procs
