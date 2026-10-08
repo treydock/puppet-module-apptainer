@@ -13,7 +13,13 @@ describe 'apptainer::plugin' do
         'example.com/log-plugin'
       end
 
-      let(:version) { '1.5.4' }
+      let(:version) do
+        if os_facts[:os]['release']['major'] == '22.04'
+          '1.4.5'
+        else
+          '1.5.4'
+        end
+      end
 
       let :params do
         { source_dir: 'examples/plugins/log-plugin' }
