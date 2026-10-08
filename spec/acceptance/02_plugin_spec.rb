@@ -34,10 +34,10 @@ describe 'apptainer::plugin' do
       SETUP_PP
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.24.11',
+        version => '1.25.6',
       }
       class { 'apptainer':
-        version        => '1.4.4',
+        version        => '1.5.3',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],
@@ -93,10 +93,10 @@ describe 'apptainer::plugin' do
       SETUP_PP
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.24.12',
+        version => '1.25.7',
       }
       class { 'apptainer':
-        version        => '1.4.5',
+        version        => '1.5.4',
         install_method => 'source',
         # Avoid /etc/localtime which may not exist in minimal Docker environments
         bind_paths     => ['/etc/hosts'],

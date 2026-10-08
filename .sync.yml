@@ -4,6 +4,7 @@
     set:
       - el8
       - el9
+      - el10
       - debian-12
       - debian-13
       - ubuntu-2204
@@ -14,8 +15,6 @@
 appveyor.yml:
   delete: true
 spec/acceptance/nodesets/el7.yml:
-  delete: true
-spec/acceptance/nodesets/el10.yml:
   delete: true
 spec/acceptance/nodesets/debian-11.yml:
   delete: true

@@ -416,6 +416,17 @@ cni plugin path = <%= scope['apptainer::cni_plugin_path'] %>
 <%- end -%>
 
 
+# CDI DIRECTORIES: [STRING]
+# DEFAULT: Undefined
+# Comma-separated list of directories in which CDI should look for
+# device definition JSON files.  Can be overridden by --cdi-dirs command line
+# option when not in suid mode or by root user.
+#cdi dirs = /etc/cdi,/var/run/cdi
+<%- unless scope['apptainer::cdi_dirs'].empty? -%>
+cdi dirs = <%= scope['apptainer::cdi_dirs'].join(', ') %>
+<%- end -%>
+
+
 # BINARY PATH: [STRING]
 # DEFAULT: $PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # Colon-separated list of directories to search for many binaries.  May include

@@ -13,7 +13,7 @@ describe 'apptainer::plugin' do
         'example.com/log-plugin'
       end
 
-      let(:version) { '1.4.5' }
+      let(:version) { '1.5.4' }
 
       let :params do
         { source_dir: 'examples/plugins/log-plugin' }

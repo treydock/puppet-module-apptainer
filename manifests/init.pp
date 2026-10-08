@@ -174,7 +174,7 @@
 class apptainer (
   Enum['package','source','os'] $install_method = 'package',
   Boolean $install_setuid = false,
-  String $version = '1.4.5',
+  String $version = '1.5.4',
   Boolean $manage_repo = true,
   Boolean $remove_singularity = false,
   # Package install
@@ -242,6 +242,7 @@ class apptainer (
   Enum['tmpfs','ramfs'] $memory_fs_type = 'tmpfs',
   Optional[Stdlib::Absolutepath] $cni_configuration_path = undef,
   Optional[Stdlib::Absolutepath] $cni_plugin_path = undef,
+  Array[Stdlib::Absolutepath] $cdi_dirs = [],
   Optional[String[1]] $binary_path = undef,
   Integer[0,default] $mksquashfs_procs = 0,
   Optional[String[1]] $mksquashfs_mem = undef,

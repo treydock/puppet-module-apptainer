@@ -4,8 +4,13 @@ class apptainer::install::package {
   assert_private()
 
   if $facts['os']['family'] == 'RedHat' {
-    $source = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}-1.x86_64.rpm"
-    $source_suid = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid-${apptainer::version}-1.x86_64.rpm"
+    if versioncmp($facts['os']['release']['major'], '10') >= 0 {
+      $source_suffix = '-1.el10.x86_64.rpm'
+    } else {
+      $source_suffix = '-1.x86_64.rpm'
+    }
+    $source = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}${source_suffix}"
+    $source_suid = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid-${apptainer::version}${source_suffix}"
     if $facts['apptainer_version'] {
       if versioncmp($apptainer::version, $facts['apptainer_version']) < 0 {
         $action = 'downgrade'
