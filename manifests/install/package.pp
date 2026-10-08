@@ -28,10 +28,17 @@ class apptainer::install::package {
       }
     }
   } elsif $facts['os']['family'] == 'Debian' {
-    $source = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}_amd64.deb"
-    $source_path = "/usr/local/src/apptainer_${apptainer::version}_amd64.deb"
-    $source_suid = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}_amd64.deb"
-    $source_suid_path = "/usr/local/src/apptainer-suid_${apptainer::version}_amd64.deb"
+    if $facts['os']['name'] == 'Debian' and versioncmp($facts['os']['release']['major'], '13') >= 0 {
+      $source_suffix = '-trixie+_amd64.deb'
+    } elsif $facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['major'], '26.04') >= 0 {
+      $source_suffix = '-trixie+_amd64.deb'
+    } else {
+      $source_suffix = '_amd64.deb'
+    }
+    $source = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}${source_suffix}"
+    $source_path = "/usr/local/src/apptainer_${apptainer::version}${source_suffix}"
+    $source_suid = "https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}${source_suffix}"
+    $source_suid_path = "/usr/local/src/apptainer-suid_${apptainer::version}${source_suffix}"
     archive { $source_path:
       source  => $source,
       extract => false,
