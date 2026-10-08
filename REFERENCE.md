@@ -751,11 +751,11 @@ The template to use for /etc/subuid and /etc/subgid
 
 Default value: `'apptainer/subid.erb'`
 
-##### <a name="-apptainer--singularity_package"></a>`subid_template`
+##### <a name="-apptainer--singularity_package"></a>`singularity_package`
 
 Data type: `String`
 
-Singularity []ackage to be removed
+Singularity package to be removed
 
 Default value: `singularity`
 
