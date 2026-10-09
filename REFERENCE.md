@@ -101,6 +101,7 @@ The following parameters are available in the `apptainer` class:
 * [`memory_fs_type`](#-apptainer--memory_fs_type)
 * [`cni_configuration_path`](#-apptainer--cni_configuration_path)
 * [`cni_plugin_path`](#-apptainer--cni_plugin_path)
+* [`cdi_dirs`](#-apptainer--cdi_dirs)
 * [`binary_path`](#-apptainer--binary_path)
 * [`mksquashfs_procs`](#-apptainer--mksquashfs_procs)
 * [`mksquashfs_mem`](#-apptainer--mksquashfs_mem)
@@ -143,7 +144,7 @@ Data type: `String`
 
 Version of Apptainer to install
 
-Default value: `'1.4.5'`
+Default value: `'1.5.4'`
 
 ##### <a name="-apptainer--manage_repo"></a>`manage_repo`
 
@@ -630,6 +631,14 @@ See apptainer.conf: `cni plugin path`
 
 Default value: `undef`
 
+##### <a name="-apptainer--cdi_dirs"></a>`cdi_dirs`
+
+Data type: `Array[Stdlib::Absolutepath]`
+
+See apptainer.conf: `cdi dirs`
+
+Default value: `[]`
+
 ##### <a name="-apptainer--binary_path"></a>`binary_path`
 
 Data type: `Optional[String[1]]`
@@ -755,9 +764,9 @@ Default value: `'apptainer/subid.erb'`
 
 Data type: `String`
 
-Singularity package to be removed
+Sets the name of the singularity package to be removed
 
-Default value: `singularity`
+Default value: `'singularity'`
 
 ## Defined types
 

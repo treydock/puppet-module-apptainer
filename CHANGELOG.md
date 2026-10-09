@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v6.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v6.0.0) (2026-10-09)
+
+[Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v5.0.0...v6.0.0)
+
+### Changed
+
+- Upgrade apptainer to 1.5.4 and support EL10 [\#16](https://github.com/treydock/puppet-module-apptainer/pull/16) ([treydock](https://github.com/treydock))
+- OS Support changes [\#15](https://github.com/treydock/puppet-module-apptainer/pull/15) ([treydock](https://github.com/treydock))
+
+### Added
+
+- Adding ability to remove singularity package [\#14](https://github.com/treydock/puppet-module-apptainer/pull/14) ([pedmon](https://github.com/pedmon))
+
 ## [v5.0.0](https://github.com/treydock/puppet-module-apptainer/tree/v5.0.0) (2026-02-03)
 
 [Full Changelog](https://github.com/treydock/puppet-module-apptainer/compare/v4.0.0...v5.0.0)
