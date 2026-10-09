@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer::install::source
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -80,6 +80,7 @@
     
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -206,7 +207,7 @@ class apptainer::install::source {
       Class[&#39;golang&#39;] -&gt; Exec[&#39;apptainer-mconfig&#39;]
     }
   }
-  ensure_packages($apptainer::source_dependencies)
+  stdlib::ensure_packages($apptainer::source_dependencies)
   $apptainer::source_dependencies.each |$package| {
     Package[$package] -&gt; Exec[&#39;apptainer-mconfig&#39;]
   }
@@ -238,19 +239,19 @@ class apptainer::install::source {
   $build_env = ($base_build_env + $apptainer::build_env).map |$key, $value| { &quot;${key}=${value}&quot; }
 
   file { &#39;apptainer-mconfig&#39;:
-      ensure  =&gt; &#39;file&#39;,
-      path    =&gt; $apptainer::source_mconfig_path,
-      owner   =&gt; &#39;root&#39;,
-      group   =&gt; &#39;root&#39;,
-      mode    =&gt; &#39;0755&#39;,
-      content =&gt; join([
+    ensure  =&gt; &#39;file&#39;,
+    path    =&gt; $apptainer::source_mconfig_path,
+    owner   =&gt; &#39;root&#39;,
+    group   =&gt; &#39;root&#39;,
+    mode    =&gt; &#39;0755&#39;,
+    content =&gt; join([
         &#39;#!/bin/bash&#39;,
         &#39;# File managed by Puppet, do not edit&#39;,
         &quot;cd ${source_dir}&quot;,
         &quot;./mconfig ${build_flags}&quot;,
         &#39;&#39;,
-      ], &quot;\n&quot;)
-    }
+    ], &quot;\n&quot;),
+  }
 
   file { $source_dir:
     ensure =&gt; &#39;directory&#39;,
@@ -259,17 +260,17 @@ class apptainer::install::source {
     mode   =&gt; &#39;0755&#39;,
   }
   -&gt; archive { &#39;apptainer-source&#39;:
-      path            =&gt; &quot;/tmp/apptainer-${apptainer::version}.tar.gz&quot;,
-      source          =&gt; &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}.tar.gz&quot;,
-      extract         =&gt; true,
-      extract_path    =&gt; $source_dir,
-      extract_command =&gt; &#39;tar xfz %s --strip-components=1&#39;,
-      creates         =&gt; &quot;${source_dir}/mconfig&quot;,
-      cleanup         =&gt; true,
-      user            =&gt; &#39;root&#39;,
-      group           =&gt; &#39;root&#39;,
-      notify          =&gt; Exec[&#39;apptainer-mconfig&#39;],
-    }
+    path            =&gt; &quot;/tmp/apptainer-${apptainer::version}.tar.gz&quot;,
+    source          =&gt; &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}.tar.gz&quot;,
+    extract         =&gt; true,
+    extract_path    =&gt; $source_dir,
+    extract_command =&gt; &#39;tar xfz %s --strip-components=1&#39;,
+    creates         =&gt; &quot;${source_dir}/mconfig&quot;,
+    cleanup         =&gt; true,
+    user            =&gt; &#39;root&#39;,
+    group           =&gt; &#39;root&#39;,
+    notify          =&gt; Exec[&#39;apptainer-mconfig&#39;],
+  }
   exec { &#39;apptainer-mconfig&#39;:
     path        =&gt; $apptainer::source_exec_path,
     environment =&gt; $build_env,

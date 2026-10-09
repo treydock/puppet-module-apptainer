@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer::singularity
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -82,6 +82,7 @@
 </div>
 
 
+
 <div class="tags">
   
 
@@ -107,7 +108,11 @@
 14
 15
 16
-17</pre>
+17
+18
+19
+20
+21</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/singularity.pp', line 3</span>
@@ -118,6 +123,10 @@ class apptainer::singularity {
   if $apptainer::install_method == &#39;source&#39; and ! $facts[&#39;apptainer_version&#39;] {
     file { &#39;/usr/bin/singularity&#39;: ensure =&gt; &#39;absent&#39; }
     file { &#39;/bin/singularity&#39;: ensure =&gt; &#39;absent&#39; }
+  }
+
+  if $apptainer::install_method == &#39;os&#39; and ! $facts[&#39;apptainer_version&#39;] {
+    package { $apptainer::singularity_package: ensure =&gt; &#39;absent&#39; }
   }
 
   file { &#39;/etc/singularity&#39;:

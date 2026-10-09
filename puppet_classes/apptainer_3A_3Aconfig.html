@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer::config
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -82,6 +82,7 @@
 </div>
 
 
+
 <div class="tags">
   
 
@@ -121,8 +122,7 @@
 28
 29
 30
-31
-32</pre>
+31</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 3</span>
@@ -132,30 +132,29 @@ class apptainer::config {
 
   file { &#39;apptainer.conf&#39;:
     ensure  =&gt; &#39;file&#39;,
-    path    =&gt; $::apptainer::config_path,
-    content =&gt; template($::apptainer::config_template),
+    path    =&gt; $apptainer::config_path,
+    content =&gt; template($apptainer::config_template),
     owner   =&gt; &#39;root&#39;,
     group   =&gt; &#39;root&#39;,
     mode    =&gt; &#39;0644&#39;,
   }
 
-  if ! empty($::apptainer::namespace_users) {
+  if ! empty($apptainer::namespace_users) {
     file { &#39;/etc/subuid&#39;:
       ensure  =&gt; &#39;file&#39;,
-      content =&gt; template($::apptainer::subid_template),
+      content =&gt; template($apptainer::subid_template),
       owner   =&gt; &#39;root&#39;,
       group   =&gt; &#39;root&#39;,
       mode    =&gt; &#39;0644&#39;,
     }
     file { &#39;/etc/subgid&#39;:
       ensure  =&gt; &#39;file&#39;,
-      content =&gt; template($::apptainer::subid_template),
+      content =&gt; template($apptainer::subid_template),
       owner   =&gt; &#39;root&#39;,
       group   =&gt; &#39;root&#39;,
       mode    =&gt; &#39;0644&#39;,
     }
   }
-
 }</pre>
       </td>
     </tr>

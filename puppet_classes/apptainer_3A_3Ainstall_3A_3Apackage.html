@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer::install::package
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -80,6 +80,7 @@
     
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -160,7 +161,19 @@
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/install/package.pp', line 3</span>
@@ -169,8 +182,13 @@ class apptainer::install::package {
   assert_private()
 
   if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; {
-    $source = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}-1.x86_64.rpm&quot;
-    $source_suid = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid-${apptainer::version}-1.x86_64.rpm&quot;
+    if versioncmp($facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;], &#39;10&#39;) &gt;= 0 {
+      $source_suffix = &#39;-1.el10.x86_64.rpm&#39;
+    } else {
+      $source_suffix = &#39;-1.x86_64.rpm&#39;
+    }
+    $source = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-${apptainer::version}${source_suffix}&quot;
+    $source_suid = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid-${apptainer::version}${source_suffix}&quot;
     if $facts[&#39;apptainer_version&#39;] {
       if versioncmp($apptainer::version, $facts[&#39;apptainer_version&#39;]) &lt; 0 {
         $action = &#39;downgrade&#39;
@@ -193,10 +211,17 @@ class apptainer::install::package {
       }
     }
   } elsif $facts[&#39;os&#39;][&#39;family&#39;] == &#39;Debian&#39; {
-    $source = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}_amd64.deb&quot;
-    $source_path = &quot;/usr/local/src/apptainer_${apptainer::version}_amd64.deb&quot;
-    $source_suid = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}_amd64.deb&quot;
-    $source_suid_path = &quot;/usr/local/src/apptainer-suid_${apptainer::version}_amd64.deb&quot;
+    if $facts[&#39;os&#39;][&#39;name&#39;] == &#39;Debian&#39; and versioncmp($facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;], &#39;13&#39;) &gt;= 0 {
+      $source_suffix = &#39;-trixie+_amd64.deb&#39;
+    } elsif $facts[&#39;os&#39;][&#39;name&#39;] == &#39;Ubuntu&#39; and versioncmp($facts[&#39;os&#39;][&#39;release&#39;][&#39;major&#39;], &#39;26.04&#39;) &gt;= 0 {
+      $source_suffix = &#39;-trixie+_amd64.deb&#39;
+    } else {
+      $source_suffix = &#39;_amd64.deb&#39;
+    }
+    $source = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer_${apptainer::version}${source_suffix}&quot;
+    $source_path = &quot;/usr/local/src/apptainer_${apptainer::version}${source_suffix}&quot;
+    $source_suid = &quot;https://github.com/apptainer/apptainer/releases/download/v${apptainer::version}/apptainer-suid_${apptainer::version}${source_suffix}&quot;
+    $source_suid_path = &quot;/usr/local/src/apptainer-suid_${apptainer::version}${source_suffix}&quot;
     archive { $source_path:
       source  =&gt; $source,
       extract =&gt; false,
@@ -206,7 +231,7 @@ class apptainer::install::package {
     }
     exec { &#39;install-apptainer&#39;:
       path        =&gt; &#39;/usr/bin:/bin:/usr/sbin:/sbin&#39;,
-      command     =&gt; &quot;apt install --force-yes -y ${source_path}&quot;,
+      command     =&gt; &quot;apt install -y --allow-downgrades -o Dpkg::Options::=\&quot;--force-confnew\&quot; ${source_path}&quot;,
       environment =&gt; [
         &#39;DEBIAN_FRONTEND=noninteractive&#39;,
       ],

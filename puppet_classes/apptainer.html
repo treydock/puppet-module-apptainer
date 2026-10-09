@@ -6,7 +6,7 @@
 <title>
   Puppet Class: apptainer
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -82,6 +82,7 @@
 </div>
 
 
+
 <div class="tags">
   
   <div class="examples">
@@ -107,10 +108,7 @@
       
         &mdash;
         <div class='inline'>
-<p>Sets how Apptainer will be installed, <code>package</code> will install the
-upstream package <code>source</code> from source <code>os</code> will
-install from standard OS repositories for example from EPEL on RedHat
-family.</p>
+<p>Sets how Apptainer will be installed, <code>package</code> will install the upstream package <code>source</code> from source <code>os</code> will install from standard OS repositories for example from EPEL on RedHat family.</p>
 </div>
       
     </li>
@@ -141,7 +139,7 @@ family.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;1.1.3&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;1.5.4&#39;</tt>)</em>
       
       
         &mdash;
@@ -236,8 +234,7 @@ family.</p>
       
         &mdash;
         <div class='inline'>
-<p>Sets if golang module should be included Only used when
-install_method=source</p>
+<p>Sets if golang module should be included Only used when install_method=source</p>
 </div>
       
     </li>
@@ -255,8 +252,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>Sets if Apptainer should be rebuilt on updates to Go via golang module Only
-used when install_method=source and manage_go=true</p>
+<p>Sets if Apptainer should be rebuilt on updates to Go via golang module Only used when install_method=source and manage_go=true</p>
 </div>
       
     </li>
@@ -274,8 +270,7 @@ used when install_method=source and manage_go=true</p>
       
         &mdash;
         <div class='inline'>
-<p>Base directory of where Apptainer source will be extracted Only used when
-install_method=source</p>
+<p>Base directory of where Apptainer source will be extracted Only used when install_method=source</p>
 </div>
       
     </li>
@@ -311,8 +306,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>Build flags to pass to mconfig when building Apptainer Only used when
-install_method=source</p>
+<p>Build flags to pass to mconfig when building Apptainer Only used when install_method=source</p>
 </div>
       
     </li>
@@ -330,8 +324,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>Environment variables to use when building from source Only used when
-install_method=source</p>
+<p>Environment variables to use when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -349,8 +342,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>The –prefix value when building from source Only used when
-install_method=source</p>
+<p>The –prefix value when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -368,8 +360,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>The –localstatedir value when building from source Only used when
-install_method=source</p>
+<p>The –localstatedir value when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -387,8 +378,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>The –sysconfdir value when building from source Only used when
-install_method=source</p>
+<p>The –sysconfdir value when building from source Only used when install_method=source</p>
 </div>
       
     </li>
@@ -503,6 +493,24 @@ install_method=source</p>
   
     <li>
       
+        <span class='name'>allow_ipc_ns</span>
+      
+      
+        <span class='type'>(<tt>Enum['yes','no']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;yes&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf: <code>allow ipc ns</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>allow_pid_ns</span>
       
       
@@ -515,6 +523,42 @@ install_method=source</p>
         &mdash;
         <div class='inline'>
 <p>See apptainer.conf: <code>allow pid ns</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>allow_user_ns</span>
+      
+      
+        <span class='type'>(<tt>Enum['yes','no']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;yes&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf: <code>allow user ns</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>allow_uts_ns</span>
+      
+      
+        <span class='type'>(<tt>Enum['yes','no']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;yes&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf: <code>allow uts ns</code></p>
 </div>
       
     </li>
@@ -758,10 +802,10 @@ install_method=source</p>
         <span class='name'>enable_overlay</span>
       
       
-        <span class='type'>(<tt>Enum['yes','no','try']</tt>)</span>
+        <span class='type'>(<tt>Enum['yes','no','try','driver']</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;try&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;yes&#39;</tt>)</em>
       
       
         &mdash;
@@ -776,7 +820,7 @@ install_method=source</p>
         <span class='name'>enable_underlay</span>
       
       
-        <span class='type'>(<tt>Enum['yes','no','try','driver']</tt>)</span>
+        <span class='type'>(<tt>Enum['yes','no','preferred']</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&#39;yes&#39;</tt>)</em>
@@ -815,7 +859,7 @@ install_method=source</p>
         <span class='type'>(<tt>Integer</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>16</tt>)</em>
+        <em class="default">(defaults to: <tt>64</tt>)</em>
       
       
         &mdash;
@@ -905,6 +949,60 @@ install_method=source</p>
   
     <li>
       
+        <span class='name'>allow_setuid_mount_encrypted</span>
+      
+      
+        <span class='type'>(<tt>Optional[Enum['yes','no']]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf <code>allow setuid-mount encrypted</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>allow_setuid_mount_squashfs</span>
+      
+      
+        <span class='type'>(<tt>Optional[Enum['yes','no','iflimited']]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf <code>allow setuid-mount squashfs</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>allow_setuid_mount_extfs</span>
+      
+      
+        <span class='type'>(<tt>Optional[Enum['yes','no']]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf <code>allow setuid-mount extfs</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>allow_net_users</span>
       
       
@@ -953,6 +1051,24 @@ install_method=source</p>
         &mdash;
         <div class='inline'>
 <p>See apptainer.conf: <code>allow net networks</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>allow_netns_paths</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf: <code>allow netns paths</code></p>
 </div>
       
     </li>
@@ -1079,6 +1195,24 @@ install_method=source</p>
         &mdash;
         <div class='inline'>
 <p>See apptainer.conf: <code>cni plugin path</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>cdi_dirs</span>
+      
+      
+        <span class='type'>(<tt>Array[Stdlib::Absolutepath]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf: <code>cdi dirs</code></p>
 </div>
       
     </li>
@@ -1247,6 +1381,42 @@ install_method=source</p>
   
     <li>
       
+        <span class='name'>apptheus_socket_path</span>
+      
+      
+        <span class='type'>(<tt>Stdlib::Absolutepath</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;/run/apptheus/gateway.sock&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf <code>apptheus socket path</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>allow_monitoring</span>
+      
+      
+        <span class='type'>(<tt>Enum['yes','no']</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;no&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>See apptainer.conf <code>allow monitoring</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>namespace_users</span>
       
       
@@ -1258,8 +1428,7 @@ install_method=source</p>
       
         &mdash;
         <div class='inline'>
-<p>List of uses to add to /etc/subuid and /etc/subgid to support user
-namespaces</p>
+<p>List of uses to add to /etc/subuid and /etc/subgid to support user namespaces</p>
 </div>
       
     </li>
@@ -1277,8 +1446,7 @@ namespaces</p>
       
         &mdash;
         <div class='inline'>
-<p>The beginning ID for /etc/subuid and /etc/subgid. The value is incremented
-For each user by start + namespace_id_range + 1</p>
+<p>The beginning ID for /etc/subuid and /etc/subgid. The value is incremented For each user by start + namespace_id_range + 1</p>
 </div>
       
     </li>
@@ -1319,6 +1487,24 @@ For each user by start + namespace_id_range + 1</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>singularity_package</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;singularity&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Sets the name of the singularity package to be removed</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -1330,28 +1516,6 @@ For each user by start + namespace_id_range + 1</p>
         <pre class="lines">
 
 
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
 178
 179
 180
@@ -1428,15 +1592,47 @@ For each user by start + namespace_id_range + 1</p>
 251
 252
 253
-254</pre>
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 156</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 178</span>
 
 class apptainer (
   Enum[&#39;package&#39;,&#39;source&#39;,&#39;os&#39;] $install_method = &#39;package&#39;,
   Boolean $install_setuid = false,
-  String $version = &#39;1.1.3&#39;,
+  String $version = &#39;1.5.4&#39;,
   Boolean $manage_repo = true,
   Boolean $remove_singularity = false,
   # Package install
@@ -1459,7 +1655,10 @@ class apptainer (
   String $config_template = &#39;apptainer/apptainer.conf.erb&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $allow_setuid  = &#39;yes&#39;,
   Integer $max_loop_devices = 256,
+  Enum[&#39;yes&#39;,&#39;no&#39;] $allow_ipc_ns = &#39;yes&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $allow_pid_ns = &#39;yes&#39;,
+  Enum[&#39;yes&#39;,&#39;no&#39;] $allow_user_ns = &#39;yes&#39;,
+  Enum[&#39;yes&#39;,&#39;no&#39;] $allow_uts_ns = &#39;yes&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $config_passwd = &#39;yes&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $config_group = &#39;yes&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $config_resolv_conf = &#39;yes&#39;,
@@ -1473,10 +1672,10 @@ class apptainer (
   Array[Stdlib::Absolutepath] $bind_paths = [&#39;/etc/localtime&#39;, &#39;/etc/hosts&#39;],
   Enum[&#39;yes&#39;,&#39;no&#39;] $user_bind_control = &#39;yes&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $enable_fusemount = &#39;yes&#39;,
-  Enum[&#39;yes&#39;,&#39;no&#39;,&#39;try&#39;] $enable_overlay = &#39;try&#39;,
-  Enum[&#39;yes&#39;,&#39;no&#39;,&#39;try&#39;,&#39;driver&#39;] $enable_underlay = &#39;yes&#39;,
+  Enum[&#39;yes&#39;,&#39;no&#39;,&#39;try&#39;,&#39;driver&#39;] $enable_overlay = &#39;yes&#39;,
+  Enum[&#39;yes&#39;,&#39;no&#39;,&#39;preferred&#39;] $enable_underlay = &#39;yes&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $mount_slave = &#39;yes&#39;,
-  Integer $sessiondir_max_size = 16,
+  Integer $sessiondir_max_size = 64,
   Optional[Array] $limit_container_owners = undef,
   Optional[Array] $limit_container_groups = undef,
   Optional[Array] $limit_container_paths = undef,
@@ -1487,9 +1686,13 @@ class apptainer (
     &#39;extfs&#39; =&gt; &#39;yes&#39;,
     &#39;dir&#39; =&gt; &#39;yes&#39;,
   },
+  Optional[Enum[&#39;yes&#39;,&#39;no&#39;]] $allow_setuid_mount_encrypted = undef,
+  Optional[Enum[&#39;yes&#39;,&#39;no&#39;,&#39;iflimited&#39;]] $allow_setuid_mount_squashfs = undef,
+  Optional[Enum[&#39;yes&#39;,&#39;no&#39;]] $allow_setuid_mount_extfs = undef,
   Array $allow_net_users = [],
   Array $allow_net_groups = [],
   Array $allow_net_networks = [],
+  Array $allow_netns_paths = [],
   Enum[&#39;yes&#39;,&#39;no&#39;] $always_use_nv = &#39;no&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $use_nvidia_container_cli = &#39;no&#39;,
   Enum[&#39;yes&#39;,&#39;no&#39;] $always_use_rocm = &#39;no&#39;,
@@ -1497,6 +1700,7 @@ class apptainer (
   Enum[&#39;tmpfs&#39;,&#39;ramfs&#39;] $memory_fs_type = &#39;tmpfs&#39;,
   Optional[Stdlib::Absolutepath] $cni_configuration_path = undef,
   Optional[Stdlib::Absolutepath] $cni_plugin_path = undef,
+  Array[Stdlib::Absolutepath] $cdi_dirs = [],
   Optional[String[1]] $binary_path = undef,
   Integer[0,default] $mksquashfs_procs = 0,
   Optional[String[1]] $mksquashfs_mem = undef,
@@ -1506,12 +1710,14 @@ class apptainer (
   Integer[0,default] $download_part_size = 5242880,
   Integer[0,default] $download_buffer_size = 32768,
   Enum[&#39;yes&#39;,&#39;no&#39;] $systemd_cgroups = &#39;yes&#39;,
+  Stdlib::Absolutepath $apptheus_socket_path = &#39;/run/apptheus/gateway.sock&#39;,
+  Enum[&#39;yes&#39;,&#39;no&#39;] $allow_monitoring = &#39;no&#39;,
   Array $namespace_users = [],
   Integer $namespace_begin_id = 65537,
   Integer $namespace_id_range = 65536,
   String $subid_template = &#39;apptainer/subid.erb&#39;,
+  String $singularity_package = &#39;singularity&#39;,
 ) {
-
   if $facts[&#39;os&#39;][&#39;family&#39;] == &#39;RedHat&#39; and $manage_repo {
     include epel
     Class[&#39;epel&#39;] -&gt; Class[&quot;apptainer::install::${install_method}&quot;]

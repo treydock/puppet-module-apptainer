@@ -6,7 +6,7 @@
 <title>
   Defined Type: apptainer::plugin
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -80,6 +80,7 @@
 </div>
 
 
+
 <div class="tags">
   
   <div class="examples">
@@ -112,8 +113,7 @@ apptainer::plugin { &#39;github.com/apptainer/apptainer/log-plugin&#39;:
       
         &mdash;
         <div class='inline'>
-<p>The plugin source directory This path must be relative to Apptainer source
-directory <code>$apptainer::install::source::source_dir</code></p>
+<p>The plugin source directory This path must be relative to Apptainer source directory <code>$apptainer::install::source::source_dir</code></p>
 </div>
       
     </li>
@@ -149,10 +149,7 @@ directory <code>$apptainer::install::source::source_dir</code></p>
       
         &mdash;
         <div class='inline'>
-<p>The name of the SIF image to use for install after the plugin is compiled.
-The default is to use part after last <code>/</code> in the plugin name so
-plugin <code>examples/plugins/log-plugin</code> will have SIF name of
-<code>log-plugin.sif</code>.</p>
+<p>The name of the SIF image to use for install after the plugin is compiled. The default is to use part after last <code>/</code> in the plugin name so plugin <code>examples/plugins/log-plugin</code> will have SIF name of <code>log-plugin.sif</code>.</p>
 </div>
       
     </li>
@@ -254,8 +251,7 @@ plugin <code>examples/plugins/log-plugin</code> will have SIF name of
 102
 103
 104
-105
-106</pre>
+105</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/plugin.pp', line 19</span>
@@ -346,7 +342,6 @@ define apptainer::plugin (
       onlyif  =&gt; &quot;apptainer plugin list | grep &#39;${name}&#39;&quot;,
     }
   }
-
 }</pre>
       </td>
     </tr>
