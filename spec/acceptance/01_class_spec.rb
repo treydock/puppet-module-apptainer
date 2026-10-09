@@ -55,7 +55,13 @@ describe 'apptainer class:' do
   end
 
   context 'with package install', if: default_install_method == 'package' do
-    let(:version) { '1.4.4' }
+    let(:version) do
+      if fact('os.name') == 'Ubuntu' && fact('os.release.major') == '22.04'
+        '1.4.4'
+      else
+        '1.5.3'
+      end
+    end
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
@@ -89,7 +95,13 @@ describe 'apptainer class:' do
   end
 
   context 'when upgrades package install', if: default_install_method == 'package' do
-    let(:version) { '1.4.5' }
+    let(:version) do
+      if fact('os.name') == 'Ubuntu' && fact('os.release.major') == '22.04'
+        '1.4.5'
+      else
+        '1.5.4'
+      end
+    end
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
@@ -122,7 +134,13 @@ describe 'apptainer class:' do
   end
 
   context 'when downgrade package install', if: default_install_method == 'package' do
-    let(:version) { '1.4.4' }
+    let(:version) do
+      if fact('os.name') == 'Ubuntu' && fact('os.release.major') == '22.04'
+        '1.4.4'
+      else
+        '1.5.3'
+      end
+    end
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
@@ -155,12 +173,12 @@ describe 'apptainer class:' do
   end
 
   context 'when source install' do
-    let(:version) { '1.4.4' }
+    let(:version) { '1.5.3' }
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.24.12',
+        version => '1.25.7',
       }
       class { 'apptainer':
         version         => '#{version}',
@@ -196,12 +214,12 @@ describe 'apptainer class:' do
   end
 
   context 'when upgrade' do
-    let(:version) { '1.4.5' }
+    let(:version) { '1.5.4' }
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.24.12',
+        version => '1.25.7',
       }
       class { 'apptainer':
         version         => '#{version}',
@@ -233,12 +251,12 @@ describe 'apptainer class:' do
   end
 
   context 'when downgrade' do
-    let(:version) { '1.4.4' }
+    let(:version) { '1.5.3' }
 
     it 'runs successfully' do
       pp = <<-PUPPET_PP
       class { 'golang':
-        version => '1.24.12',
+        version => '1.25.7',
       }
       class { 'apptainer':
         version         => '#{version}',
